@@ -1,10 +1,11 @@
-name: Setup Node.js and dependencies
-description: Setup Node.js environment with npm dependencies
+name: Setup Bun and dependencies
+description: Setup Bun environment with dependencies
 
 inputs:
-  node-version:
-    description: Node.js version
-    required: true
+  bun-version:
+    description: Bun version
+    required: false
+    default: 'latest'
   restore-nextjs-cache:
     description: Whether to restore Next.js build cache
     required: false
@@ -13,23 +14,22 @@ inputs:
 runs:
   using: composite
   steps:
-    - name: Use Node.js ${{ inputs.node-version }}
-      uses: actions/setup-node@v6
+    - name: Setup Bun
+      uses: oven-sh/setup-bun@v2
       with:
-        node-version: ${{ inputs.node-version }}
-        cache: npm
+        bun-version: ${{ inputs.bun-version }}
 
     - name: Restore or cache node_modules
       id: cache-node-modules
       uses: actions/cache@v5
       with:
         path: node_modules
-        key: node-modules-${{ inputs.node-version }}-${{ hashFiles('package-lock.json') }}
+        key: node-modules-${{ inputs.bun-version }}-${{ hashFiles('bun.lock') }}
 
     - name: Install dependencies
       if: steps.cache-node-modules.outputs.cache-hit != 'true'
       shell: bash
-      run: npm ci
+      run: bun install --frozen-lockfile
 
     - name: Restore Next.js build output
       if: inputs.restore-nextjs-cache == 'true'
@@ -38,5 +38,5 @@ runs:
         path: |
           .next
           next-env.d.ts
-        key: nextjs-build-${{ inputs.node-version }}-${{ github.sha }}
+        key: nextjs-build-${{ github.sha }}
         fail-on-cache-miss: true
