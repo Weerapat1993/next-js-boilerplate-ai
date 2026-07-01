@@ -1,21 +1,13 @@
 import { SidebarNav } from './SidebarNav';
 
-interface SidebarLayoutProps {
+export const SidebarLayout = (props: {
   children: React.ReactNode;
   sidebarFooter?: React.ReactNode;
-}
-
-/**
- * Layout component with a sidebar navigation and main content area.
- * Renders a two-column layout with SidebarNav on the left.
- */
-export function SidebarLayout(props: SidebarLayoutProps) {
-  return (
-    <div className="flex h-screen">
-      <SidebarNav footerSlot={props.sidebarFooter} />
-      <main className="flex-1 overflow-auto">
-        {props.children}
-      </main>
-    </div>
-  );
-}
+}) => (
+  <div className="flex min-h-screen font-sans text-gray-900 antialiased dark:bg-gray-950 dark:text-gray-100">
+    <SidebarNav footerSlot={props.sidebarFooter} />
+    <main className="flex-1 overflow-auto bg-gray-50 dark:bg-gray-900">
+      <div className="mx-auto max-w-4xl px-6 py-8 md:px-10">{props.children}</div>
+    </main>
+  </div>
+);
