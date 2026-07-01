@@ -6,20 +6,10 @@ import { usePathname } from 'next/navigation';
 import { Link } from '@/libs/I18nNavigation';
 import { AppConfig } from '@/utils/AppConfig';
 
-type NavTranslator = ReturnType<typeof useTranslations<'Navigation'>>;
-
 type NavEntry = {
   href: string;
-  key: 'home' | 'about' | 'counter' | 'portfolio' | 'dashboard';
+  label: string;
 };
-
-const NAV_ENTRIES: NavEntry[] = [
-  { href: '/', key: 'home' },
-  { href: '/about/', key: 'about' },
-  { href: '/counter/', key: 'counter' },
-  { href: '/portfolio/', key: 'portfolio' },
-  { href: '/dashboard/', key: 'dashboard' },
-];
 
 const isActive = (pathname: string, href: string): boolean => {
   if (href === '/') {
@@ -30,11 +20,11 @@ const isActive = (pathname: string, href: string): boolean => {
 
 const NavLinks = (props: {
   pathname: string;
-  t: NavTranslator;
+  entries: NavEntry[];
   onLinkClick?: () => void;
 }) => (
   <ul className="space-y-0.5 px-2">
-    {NAV_ENTRIES.map((entry) => (
+    {props.entries.map((entry) => (
       <li key={entry.href}>
         <Link
           href={entry.href}
@@ -45,7 +35,7 @@ const NavLinks = (props: {
               : 'text-gray-600 hover:bg-gray-100 hover:text-gray-900 dark:text-gray-400 dark:hover:bg-gray-800 dark:hover:text-gray-100'
           }`}
         >
-          {props.t(entry.key)}
+          {entry.label}
         </Link>
       </li>
     ))}
@@ -56,6 +46,13 @@ export const SidebarNav = (props: { footerSlot?: React.ReactNode }) => {
   const [open, setOpen] = useState(false);
   const t = useTranslations('Navigation');
   const pathname = usePathname();
+  const navEntries: NavEntry[] = [
+    { href: '/', label: t('home') },
+    { href: '/about/', label: t('about') },
+    { href: '/counter/', label: t('counter') },
+    { href: '/portfolio/', label: t('portfolio') },
+    { href: '/dashboard/', label: t('dashboard') },
+  ];
 
   const appName = (
     <span className="text-base font-semibold text-gray-900 dark:text-gray-100">
@@ -103,7 +100,7 @@ export const SidebarNav = (props: { footerSlot?: React.ReactNode }) => {
               </button>
             </div>
             <nav className="flex-1 overflow-y-auto py-4">
-              <NavLinks pathname={pathname} t={t} onLinkClick={() => setOpen(false)} />
+              <NavLinks entries={navEntries} pathname={pathname} onLinkClick={() => setOpen(false)} />
             </nav>
             {props.footerSlot && (
               <div className="border-t border-gray-200 px-4 py-3 dark:border-gray-700">
@@ -120,7 +117,7 @@ export const SidebarNav = (props: { footerSlot?: React.ReactNode }) => {
           {appName}
         </div>
         <nav className="flex-1 overflow-y-auto py-4">
-          <NavLinks pathname={pathname} t={t} />
+          <NavLinks entries={navEntries} pathname={pathname} />
         </nav>
         {props.footerSlot && (
           <div className="border-t border-gray-200 px-4 py-3 dark:border-gray-700">
