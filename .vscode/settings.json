@@ -71,5 +71,19 @@
   // JSON Schema
   "json.schemaDownload.trustedDomains": {
     "https://ui.shadcn.com": true
-  }
+  },
+  "sqltools.connections": [
+    {
+      "ssh": "Disabled",
+      "previewLimit": 50,
+      "server": "localhost",
+      "port": 5432,
+      "driver": "PostgreSQL",
+      "name": "PG Local",
+      "username": "postgres",
+      "database": "next-js",
+      "password": "123456",
+      "connectionTimeout": 30
+    }
+  ]
 }

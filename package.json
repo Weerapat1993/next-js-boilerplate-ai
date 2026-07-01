@@ -12,8 +12,6 @@
     "start": "next start",
     "build-stats": "cross-env ANALYZE=true npm run build",
     "clean": "rimraf .next out coverage",
-    "lint": "ultracite check --type-aware --type-check",
-    "lint:fix": "ultracite fix --type-aware --type-check",
     "check:types": "tsc --noEmit --pretty",
     "check:i18n": "i18n-check -l src/locales -s en -u src -f next-intl",
     "commit": "commit",
