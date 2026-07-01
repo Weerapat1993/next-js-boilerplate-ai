@@ -65,3 +65,4 @@ build-archive.log
 .kanban.json
 /obsidian/kanban/tasks/lark-sync.json
 pass.txt
+.env*

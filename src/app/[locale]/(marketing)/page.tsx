@@ -76,15 +76,7 @@ export default async function Index(props: IndexPageProps) {
             Neon
           </a>
         </li>
-        <li>
-          🌐 Multi-language support (i18n) with next-intl and{' '}
-          <a
-            className="font-bold text-blue-700 hover:border-b-2 hover:border-blue-700"
-            href="https://l.crowdin.com/next-js"
-          >
-            Crowdin
-          </a>
-        </li>
+        <li>🌐 Multi-language support (i18n) with next-intl</li>
         <li>🔴 Form handling (React Hook Form) and validation (Zod)</li>
         <li>📏 Linting and formatting (ESLint, Prettier)</li>
         <li>🦊 Git hooks and commit linting (Husky, Commitlint)</li>
@@ -108,17 +100,6 @@ export default async function Index(props: IndexPageProps) {
             Sentry
           </a>
           ) and logging (LogTape, an alternative to Pino.js)
-        </li>
-        <li>🖥️ Monitoring as Code (Checkly)</li>
-        <li>
-          🔐 Security and bot protection (
-          <a
-            className="font-bold text-blue-700 hover:border-b-2 hover:border-blue-700"
-            href="https://launch.arcjet.com/Q6eLbRE"
-          >
-            Arcjet
-          </a>
-          )
         </li>
         <li>🤖 SEO optimization (metadata, JSON-LD, Open Graph tags)</li>
         <li>⚙️ Development tools (VSCode config, bundler analyzer, changelog generation)</li>
