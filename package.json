@@ -28,8 +28,7 @@
     "claude": "headroom wrap claude"
   },
   "dependencies": {
-    "@arcjet/next": "^1.6.1",
-    "@clerk/localizations": "^4.12.0",
+"@clerk/localizations": "^4.12.0",
     "@clerk/nextjs": "^7.5.11",
     "@hookform/resolvers": "^5.2.2",
     "@logtape/logtape": "^2.2.2",
@@ -66,8 +65,7 @@
     "@vitest/browser-playwright": "^4.1.7",
     "@vitest/coverage-v8": "^4.1.7",
     "babel-plugin-react-compiler": "^1.0.0",
-    "checkly": "^7.14.0",
-    "cross-env": "^10.1.0",
+"cross-env": "^10.1.0",
     "dotenv-cli": "^11.0.0",
     "drizzle-kit": "^0.31.10",
     "knip": "^6.23.0",
