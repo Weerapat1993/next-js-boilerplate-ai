@@ -63,7 +63,10 @@
   "Dashboard": {
     "hello_message": "Bonjour {email}!",
     "alternative_message": "Besoin de fonctionnalités avancées ? Multi-tenant et équipes, rôles et permissions, Shadcn UI, typage de bout en bout avec oRPC, paiement Stripe, mode clair / sombre. Essayez <url></url>.",
-    "max_message": "Ou, besoin d'une stack d'auth auto-hébergée (Better Auth) ? Essayez <url></url>."
+    "max_message": "Ou, besoin d'une stack d'auth auto-hébergée (Better Auth) ? Essayez <url></url>.",
+    "stat_counter": "Opérations compteur",
+    "stat_portfolio": "Éléments du portfolio",
+    "stat_account": "Paramètres du compte"
   },
   "DashboardLayout": {
     "meta_title": "Tableau de bord",
@@ -71,6 +74,19 @@
     "dashboard_link": "Tableau de bord",
     "user_profile_link": "Gérer votre compte",
     "sign_out": "Se déconnecter"
+  },
+  "Navigation": {
+    "home": "Accueil",
+    "about": "À propos",
+    "counter": "Compteur",
+    "portfolio": "Portfolio",
+    "dashboard": "Tableau de bord"
+  },
+  "HomePage": {
+    "hero_title": "Bienvenue sur Next.js Boilerplate",
+    "hero_subtitle": "Construisez votre prochain projet avec les technologies modernes",
+    "hero_cta": "Commencer",
+    "feature_grid_title": "Fonctionnalités clés"
   },
   "LocaleSwitcher": {
     "change_language": "Changer de langue"
