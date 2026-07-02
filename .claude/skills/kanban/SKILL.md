@@ -103,6 +103,7 @@ Treat these user messages as Kanban commands:
 /kanban lark sync WORK-XXXX
 /kanban sprint close
 /kanban sprint close --name=splint-3
+/kanban api get-backlog
 /kanban help
 ```
 
@@ -180,6 +181,10 @@ Include these commands:
 
 /kanban sprint close --name=splint-3
   Same as above but use a specific name for the new sprint archive file.
+
+/kanban api get-backlog
+  Pull Backlog cards from workspace-ai API and write them as .md files into obsidian/kanban/specs/backlog/.
+  Requires workspaceAiUrl and WORKSPACE_AI_TOKEN to be configured.
 ```
 
 Also include two short examples:
@@ -479,16 +484,15 @@ For `/kanban start WORK-XXXX`:
     - `lark`: skip artisan sync; use Lark commands in the next step instead.
 12. If optional Lark sync is enabled (or `KANBAN_PROVIDER=lark`), run `php artisan ticket:move-lark WORK-XXXX inprogress` immediately after the local board and ticket status are updated, before implementation work begins. Report any Lark failure without reverting the local move.
 13. If the ticket is a bug report or regression, use the `debug-mantra` skill before proposing or implementing a fix. If the user asks to skip the recital, still apply its reproduce -> trace -> falsify -> breadcrumb workflow silently.
-14. If the ticket has `### Implementation Plan` with 3 or more clearly independent tasks, use the `subagent-driven-development` skill to execute the plan. Otherwise, implement the ticket directly unless required information is missing.
-15. After implementation, check whether this ticket changed database migrations or seeders.
-16. If this ticket created or modified database migration files, run `php artisan migrate --force` before reporting completion.
-17. If this ticket created or modified a seeder, run `php artisan db:seed --class=NewSeeder --force`, replacing `NewSeeder` with the actual seeder class name.
-18. If the seeder command from the previous step fails because old database records already exist and the seed data collides or overwrites existing data, explain the cause, split the new seed data into a separate seeder file, then run `php artisan db:seed --class=NewSeparateSeeder --force` with the new seeder class.
-19. Run the ticket's required validation after any migration or seeding commands that apply.
-20. After implementation and validation, report the result, whether the ticket appears ready for review, and what commands the user should run when deploying this change to Hostinger. Include `php artisan migrate --force` when migrations changed, include the exact `php artisan db:seed --class=... --force` command when seeders changed, and mention when neither command is required.
-21. Do not move the ticket to Review automatically during `start`, even when implementation and validation pass.
-22. Do not run `php artisan ticket:move-lark WORK-XXXX review` during `start`.
-23. Wait for an explicit `/kanban move-review WORK-XXXX` command before adding `Review Notes`, moving the ticket entry to the `## REVIEW` section, changing `Status:` to `Review`, or syncing Lark to `review`.
+14. After implementation, check whether this ticket changed database migrations or seeders.
+15. If this ticket created or modified database migration files, run `php artisan migrate --force` before reporting completion.
+16. If this ticket created or modified a seeder, run `php artisan db:seed --class=NewSeeder --force`, replacing `NewSeeder` with the actual seeder class name.
+17. If the seeder command from the previous step fails because old database records already exist and the seed data collides or overwrites existing data, explain the cause, split the new seed data into a separate seeder file, then run `php artisan db:seed --class=NewSeparateSeeder --force` with the new seeder class.
+18. Run the ticket's required validation after any migration or seeding commands that apply.
+19. After implementation and validation, report the result, whether the ticket appears ready for review, and what commands the user should run when deploying this change to Hostinger. Include `php artisan migrate --force` when migrations changed, include the exact `php artisan db:seed --class=... --force` command when seeders changed, and mention when neither command is required.
+20. Do not move the ticket to Review automatically during `start`, even when implementation and validation pass.
+21. Do not run `php artisan ticket:move-lark WORK-XXXX review` during `start`.
+22. Wait for an explicit `/kanban move-review WORK-XXXX` command before adding `Review Notes`, moving the ticket entry to the `## REVIEW` section, changing `Status:` to `Review`, or syncing Lark to `review`.
 
 Do not invoke `writing-plans` again during `start` when the ticket already has `Status: Plan` and `### Implementation Plan`.
 
@@ -677,3 +681,55 @@ After processing the queue, report:
 - the resolved ticket order
 - created or updated marketing ticket paths
 - skipped duplicates, missing source tickets, and open questions that prevented a complete translation
+
+## API Get Backlog
+
+For `/kanban api get-backlog`:
+
+1. Read config from `.kanban.json` or environment variables. Require both `workspaceAiUrl` (from `workspaceAiUrl` key or `WORKSPACE_AI_URL` env) and `WORKSPACE_AI_TOKEN`. If either is missing, stop with:
+
+   ```
+   KANBAN_API error: workspaceAiUrl หรือ WORKSPACE_AI_TOKEN ไม่ได้ตั้งค่า
+   ตั้งค่าใน .kanban.json หรือ environment variables แล้วลองใหม่
+   ```
+
+2. Scan all files in `obsidian/kanban/specs/backlog/` (if the directory exists). For each file, read its content and parse lines matching `Card ID: {id}` — collect all IDs into a `skip_ids` array. If the directory does not exist, `skip_ids` is empty.
+
+3. Call `POST {workspaceAiUrl}/api/kanban/backlog/export` with:
+   - Header: `X-API-Key: {WORKSPACE_AI_TOKEN}`
+   - Header: `Content-Type: application/json`
+   - Body: `{ "skip_ids": [...] }`
+
+4. Handle API errors:
+   - 401 / 403: stop with "X-API-Key ไม่ถูกต้อง"
+   - 404: stop with "Backlog column not found"
+   - Network / timeout: stop with the error message
+   - Any other non-2xx: stop with the status code and message
+
+5. If `obsidian/kanban/specs/backlog/` does not exist, create it before writing files. If creation fails (permission error), stop with the OS error.
+
+6. For each item in the API response array:
+   - If `action` is `"SKIP"`: count as skipped, do not write.
+   - If `action` is `"NEW"`: write the `content` value to `obsidian/kanban/specs/backlog/{filename}` where `filename` comes directly from the API response field `filename`. Do not derive or reconstruct the filename.
+
+7. Report results regardless of whether any new files were written:
+   - When new files exist: `kanban api get-backlog: exported N new, skipped M\nFiles written to obsidian/kanban/specs/backlog/`
+   - When no new files: `kanban api get-backlog: ไม่มี card ใหม่ — skipped M card ที่มีอยู่แล้ว`
+
+**Content format** written by the API (do not reformat):
+```md
+# {title}
+
+Card ID: {id}
+Created At: {created_at}
+
+## รายละเอียด {type}
+{description}
+```
+
+**Rules:**
+- Never use Artisan commands — this command runs in external projects without Laravel.
+- Use `filename` from the API response directly. Do not generate filenames.
+- Write only cards with `action: "NEW"`.
+- The `skip_ids` deduplication prevents rewriting existing cards.
+- `obsidian/kanban/specs/backlog/` is auto-created if absent.
