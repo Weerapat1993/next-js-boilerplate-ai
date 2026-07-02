@@ -8,13 +8,14 @@ kanban-plugin: board
 
 ## TODO
 
-- [NEX-1001](tasks/NEX-1001.md): Redesign Landing Page UI (Apple Developer Docs Style)
 
 ## PLAN
 
 ## INPROGRESS
 
 ## REVIEW
+
+- [NEX-1001](tasks/NEX-1001.md): Redesign Landing Page UI (Apple Developer Docs Style)
 
 ## DONE
 
