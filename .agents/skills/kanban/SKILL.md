@@ -578,6 +578,16 @@ For `/kanban sync` and `/kanban sync WORK-XXXX`:
 
 **Prerequisites:** Requires `KANBAN_PROVIDER=workspace-ai` (or `provider: workspace-ai` in `.kanban.json`) with `WORKSPACE_AI_URL` and `WORKSPACE_AI_TOKEN` set. If config is missing, show the setup guide from the Configuration section and stop.
 
+Workspace AI only:
+
+0. Do not call `GET {WORKSPACE_AI_URL}/api/kanban/tickets/{ticket}/download` during sync. Local `.md` ticket files are the source for card content; sync only card existence, project, and status through the API.
+1. Before local file sync, check the remote Kanban board with `GET {WORKSPACE_AI_URL}/api/kanban/tickets/{ticket}` using `X-API-Key: {WORKSPACE_AI_TOKEN}`.
+2. If the API returns 404 or no card for `{ticket}`, create it with the Kanban Create Card API: `POST {WORKSPACE_AI_URL}/api/kanban/cards` using `X-API-Key: {WORKSPACE_AI_TOKEN}` and `Content-Type: application/json`.
+   Include `ticket`, current title if known, current project, and the mapped current status.
+3. If the API confirms `{ticket}` already exists, sync it with the user's current project and update the remote status with `PATCH {WORKSPACE_AI_URL}/api/kanban/cards/{ticket}` using `X-API-Key: {WORKSPACE_AI_TOKEN}` and `Content-Type: application/json`.
+   Include the current project and mapped current status in the payload. Do not download or overwrite local files.
+4. Apply this remote board existence/create/update flow only when provider is `workspace-ai`. Do not run it for `local` or `lark`.
+
 ### Column-to-section mapping (case-insensitive)
 
 When mapping a column name from the API response to a board section, normalize the column value to lowercase and strip spaces before matching:
