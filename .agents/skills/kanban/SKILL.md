@@ -103,6 +103,7 @@ Treat these user messages as Kanban commands:
 /kanban lark sync WORK-XXXX
 /kanban sprint close
 /kanban sprint close --name=splint-3
+/kanban api get-backlog
 /kanban help
 ```
 
@@ -180,6 +181,10 @@ Include these commands:
 
 /kanban sprint close --name=splint-3
   Same as above but use a specific name for the new sprint archive file.
+
+/kanban api get-backlog
+  Pull Backlog cards from workspace-ai API and write them as .md files into obsidian/kanban/specs/backlog/.
+  Requires workspaceAiUrl and WORKSPACE_AI_TOKEN to be configured.
 ```
 
 Also include two short examples:
@@ -676,3 +681,55 @@ After processing the queue, report:
 - the resolved ticket order
 - created or updated marketing ticket paths
 - skipped duplicates, missing source tickets, and open questions that prevented a complete translation
+
+## API Get Backlog
+
+For `/kanban api get-backlog`:
+
+1. Read config from `.kanban.json` or environment variables. Require both `workspaceAiUrl` (from `workspaceAiUrl` key or `WORKSPACE_AI_URL` env) and `WORKSPACE_AI_TOKEN`. If either is missing, stop with:
+
+   ```
+   KANBAN_API error: workspaceAiUrl หรือ WORKSPACE_AI_TOKEN ไม่ได้ตั้งค่า
+   ตั้งค่าใน .kanban.json หรือ environment variables แล้วลองใหม่
+   ```
+
+2. Scan all files in `obsidian/kanban/specs/backlog/` (if the directory exists). For each file, read its content and parse lines matching `Card ID: {id}` — collect all IDs into a `skip_ids` array. If the directory does not exist, `skip_ids` is empty.
+
+3. Call `POST {workspaceAiUrl}/api/kanban/backlog/export` with:
+   - Header: `X-API-Key: {WORKSPACE_AI_TOKEN}`
+   - Header: `Content-Type: application/json`
+   - Body: `{ "skip_ids": [...] }`
+
+4. Handle API errors:
+   - 401 / 403: stop with "X-API-Key ไม่ถูกต้อง"
+   - 404: stop with "Backlog column not found"
+   - Network / timeout: stop with the error message
+   - Any other non-2xx: stop with the status code and message
+
+5. If `obsidian/kanban/specs/backlog/` does not exist, create it before writing files. If creation fails (permission error), stop with the OS error.
+
+6. For each item in the API response array:
+   - If `action` is `"SKIP"`: count as skipped, do not write.
+   - If `action` is `"NEW"`: write the `content` value to `obsidian/kanban/specs/backlog/{filename}` where `filename` comes directly from the API response field `filename`. Do not derive or reconstruct the filename.
+
+7. Report results regardless of whether any new files were written:
+   - When new files exist: `kanban api get-backlog: exported N new, skipped M\nFiles written to obsidian/kanban/specs/backlog/`
+   - When no new files: `kanban api get-backlog: ไม่มี card ใหม่ — skipped M card ที่มีอยู่แล้ว`
+
+**Content format** written by the API (do not reformat):
+```md
+# {title}
+
+Card ID: {id}
+Created At: {created_at}
+
+## รายละเอียด {type}
+{description}
+```
+
+**Rules:**
+- Never use Artisan commands — this command runs in external projects without Laravel.
+- Use `filename` from the API response directly. Do not generate filenames.
+- Write only cards with `action: "NEW"`.
+- The `skip_ids` deduplication prevents rewriting existing cards.
+- `obsidian/kanban/specs/backlog/` is auto-created if absent.
