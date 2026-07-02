@@ -1,115 +1,78 @@
 import type { Metadata } from 'next';
 import { getTranslations, setRequestLocale } from 'next-intl/server';
-import { Sponsors } from '@/components/Sponsors';
 
 type IndexPageProps = {
   params: Promise<{ locale: string }>;
 };
 
+const FEATURES = [
+  { emoji: '🚀', title: 'Next.js App Router', description: 'Latest App Router with server components and streaming.' },
+  { emoji: '🔥', title: 'TypeScript', description: 'Full type safety across the entire codebase.' },
+  { emoji: '💎', title: 'Tailwind CSS v4', description: 'Utility-first styling with the latest Tailwind.' },
+  { emoji: '🔒', title: 'Clerk Auth', description: 'Passwordless, social, and multi-factor authentication.' },
+  { emoji: '📦', title: 'DrizzleORM', description: 'Type-safe ORM with PostgreSQL, SQLite, and MySQL.' },
+  { emoji: '🌐', title: 'next-intl', description: 'Multi-language support with locale-aware routing.' },
+  { emoji: '🔴', title: 'Form validation', description: 'React Hook Form + Zod for robust forms.' },
+  { emoji: '🦺', title: 'Testing suite', description: 'Vitest, React Testing Library, and Playwright.' },
+  { emoji: '🤖', title: 'SEO ready', description: 'Metadata, JSON-LD, Open Graph, and sitemap.' },
+] as const;
+
 export async function generateMetadata(props: IndexPageProps): Promise<Metadata> {
   const { locale } = await props.params;
-  const t = await getTranslations({
-    locale,
-    namespace: 'Index',
-  });
-
+  const t = await getTranslations({ locale, namespace: 'Index' });
   return {
     title: t('meta_title'),
     description: t('meta_description'),
   };
 }
 
-export default async function Index(props: IndexPageProps) {
+export default async function IndexPage(props: IndexPageProps) {
   const { locale } = await props.params;
   setRequestLocale(locale);
-  const t = await getTranslations({
-    locale,
-    namespace: 'Index',
-  });
+  const t = await getTranslations({ locale, namespace: 'HomePage' });
 
   return (
-    <>
-      <p>
-        {`Follow `}
-        <a
-          className="text-blue-700 hover:border-b-2 hover:border-blue-700"
-          href="https://twitter.com/ixartz"
-          target="_blank"
-          rel="noreferrer noopener"
-        >
-          @Ixartz on Twitter
-        </a>
-        {` for updates and more information about the boilerplate.`}
-      </p>
-      <h2 className="mt-5 text-2xl font-bold">
-        Boilerplate Code for Your Next.js Project with Tailwind CSS
-      </h2>
-      <p className="text-base">
-        Next.js Boilerplate is a developer-friendly starter code for Next.js projects, built with
-        Tailwind CSS and TypeScript. {/* oxlint-disable-next-line jsx-a11y/prefer-tag-over-role */}
-        <span role="img" aria-label={t('zap_emoji_label')}>
-          ⚡️
-        </span>{' '}
-        Designed with developer experience in mind, it includes:
-      </p>
-      <ul className="mt-3 text-base">
-        <li>🚀 Next.js with App Router support</li>
-        <li>🔥 TypeScript for type checking</li>
-        <li>💎 Tailwind CSS integration</li>
-        <li>
-          🔒 Authentication with{' '}
+    <div>
+      <section className="border-b border-gray-200 pb-10 dark:border-gray-800">
+        <h1 className="text-4xl font-bold tracking-tight text-gray-900 dark:text-gray-100">
+          {t('hero_title')}
+        </h1>
+        <p className="mt-4 max-w-2xl text-lg text-gray-500 dark:text-gray-400">
+          {t('hero_subtitle')}
+        </p>
+        <div className="mt-6">
           <a
-            className="font-bold text-blue-700 hover:border-b-2 hover:border-blue-700"
-            href="https://clerk.com?utm_source=github&amp;utm_medium=sponsorship&amp;utm_campaign=nextjs-boilerplate"
+            href="https://github.com/ixartz/Next-js-Boilerplate"
+            target="_blank"
+            rel="noreferrer noopener"
+            className="inline-flex items-center rounded-md bg-[#0066CC] px-5 py-2.5 text-sm font-semibold text-white hover:bg-[#0055AA] focus:outline-none focus:ring-2 focus:ring-[#0066CC]/50"
           >
-            Clerk
-          </a>{' '}
-          (includes passwordless, social, and multi-factor auth)
-        </li>
-        <li>📦 ORM with DrizzleORM (PostgreSQL, SQLite, MySQL support)</li>
-        <li>
-          💽 Dev database with PGlite and production with{' '}
-          <a
-            className="font-bold text-blue-700 hover:border-b-2 hover:border-blue-700"
-            href="https://get.neon.com/BMFYNtx"
-          >
-            Neon
+            {t('hero_cta')}
           </a>
-        </li>
-        <li>🌐 Multi-language support (i18n) with next-intl</li>
-        <li>🔴 Form handling (React Hook Form) and validation (Zod)</li>
-        <li>📏 Linting and formatting (ESLint, Prettier)</li>
-        <li>🦊 Git hooks and commit linting (Husky, Commitlint)</li>
-        <li>🦺 Testing suite (Vitest, React Testing Library, Playwright)</li>
-        <li>🎉 Storybook for UI development</li>
-        <li>
-          🐰 AI-powered code reviews with{' '}
-          <a
-            className="font-bold text-blue-700 hover:border-b-2 hover:border-blue-700"
-            href="https://www.coderabbit.ai?utm_source=next_js_starter&utm_medium=github&utm_campaign=next_js_starter_oss_2025"
-          >
-            CodeRabbit
-          </a>
-        </li>
-        <li>
-          🚨 Error monitoring (
-          <a
-            className="font-bold text-blue-700 hover:border-b-2 hover:border-blue-700"
-            href="https://sentry.io/for/nextjs/?utm_source=github&amp;utm_medium=paid-community&amp;utm_campaign=general-fy25q1-nextjs&amp;utm_content=github-banner-nextjsboilerplate-logo"
-          >
-            Sentry
-          </a>
-          ) and logging (LogTape, an alternative to Pino.js)
-        </li>
-        <li>🤖 SEO optimization (metadata, JSON-LD, Open Graph tags)</li>
-        <li>⚙️ Development tools (VSCode config, bundler analyzer, changelog generation)</li>
-      </ul>
-      <p className="text-base">
-        Our sponsors&apos; exceptional support has made this project possible. Their services
-        integrate seamlessly with the boilerplate, and we recommend trying them out.
-      </p>
-      <h2 className="mt-5 text-2xl font-bold">{t('sponsors_title')}</h2>
-      <Sponsors />
-    </>
+        </div>
+      </section>
+
+      <section className="pt-10">
+        <h2 className="mb-6 text-xl font-semibold text-gray-900 dark:text-gray-100">
+          {t('feature_grid_title')}
+        </h2>
+        <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-3">
+          {FEATURES.map((feature) => (
+            <div
+              key={feature.title}
+              className="rounded-lg border border-gray-200 p-4 dark:border-gray-700"
+            >
+              <div className="mb-2 text-xl">{feature.emoji}</div>
+              <h3 className="text-sm font-semibold text-gray-900 dark:text-gray-100">
+                {feature.title}
+              </h3>
+              <p className="mt-1 text-sm text-gray-500 dark:text-gray-400">
+                {feature.description}
+              </p>
+            </div>
+          ))}
+        </div>
+      </section>
+    </div>
   );
 }

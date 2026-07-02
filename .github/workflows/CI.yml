@@ -53,9 +53,7 @@ jobs:
         uses: ./.github/actions/setup-project
 
       - name: Run unit tests
-        uses: docker://mcr.microsoft.com/playwright:v1.60.0
-        with:
-          args: npm run test -- --coverage
+        run: bun run test -- --project unit --coverage
 
       - name: Upload coverage reports to Codecov
         uses: codecov/codecov-action@v6
