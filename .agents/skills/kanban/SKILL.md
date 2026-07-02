@@ -479,16 +479,15 @@ For `/kanban start WORK-XXXX`:
     - `lark`: skip artisan sync; use Lark commands in the next step instead.
 12. If optional Lark sync is enabled (or `KANBAN_PROVIDER=lark`), run `php artisan ticket:move-lark WORK-XXXX inprogress` immediately after the local board and ticket status are updated, before implementation work begins. Report any Lark failure without reverting the local move.
 13. If the ticket is a bug report or regression, use the `debug-mantra` skill before proposing or implementing a fix. If the user asks to skip the recital, still apply its reproduce -> trace -> falsify -> breadcrumb workflow silently.
-14. If the ticket has `### Implementation Plan` with 3 or more clearly independent tasks, use the `subagent-driven-development` skill to execute the plan. Otherwise, implement the ticket directly unless required information is missing.
-15. After implementation, check whether this ticket changed database migrations or seeders.
-16. If this ticket created or modified database migration files, run `php artisan migrate --force` before reporting completion.
-17. If this ticket created or modified a seeder, run `php artisan db:seed --class=NewSeeder --force`, replacing `NewSeeder` with the actual seeder class name.
-18. If the seeder command from the previous step fails because old database records already exist and the seed data collides or overwrites existing data, explain the cause, split the new seed data into a separate seeder file, then run `php artisan db:seed --class=NewSeparateSeeder --force` with the new seeder class.
-19. Run the ticket's required validation after any migration or seeding commands that apply.
-20. After implementation and validation, report the result, whether the ticket appears ready for review, and what commands the user should run when deploying this change to Hostinger. Include `php artisan migrate --force` when migrations changed, include the exact `php artisan db:seed --class=... --force` command when seeders changed, and mention when neither command is required.
-21. Do not move the ticket to Review automatically during `start`, even when implementation and validation pass.
-22. Do not run `php artisan ticket:move-lark WORK-XXXX review` during `start`.
-23. Wait for an explicit `/kanban move-review WORK-XXXX` command before adding `Review Notes`, moving the ticket entry to the `## REVIEW` section, changing `Status:` to `Review`, or syncing Lark to `review`.
+14. After implementation, check whether this ticket changed database migrations or seeders.
+15. If this ticket created or modified database migration files, run `php artisan migrate --force` before reporting completion.
+16. If this ticket created or modified a seeder, run `php artisan db:seed --class=NewSeeder --force`, replacing `NewSeeder` with the actual seeder class name.
+17. If the seeder command from the previous step fails because old database records already exist and the seed data collides or overwrites existing data, explain the cause, split the new seed data into a separate seeder file, then run `php artisan db:seed --class=NewSeparateSeeder --force` with the new seeder class.
+18. Run the ticket's required validation after any migration or seeding commands that apply.
+19. After implementation and validation, report the result, whether the ticket appears ready for review, and what commands the user should run when deploying this change to Hostinger. Include `php artisan migrate --force` when migrations changed, include the exact `php artisan db:seed --class=... --force` command when seeders changed, and mention when neither command is required.
+20. Do not move the ticket to Review automatically during `start`, even when implementation and validation pass.
+21. Do not run `php artisan ticket:move-lark WORK-XXXX review` during `start`.
+22. Wait for an explicit `/kanban move-review WORK-XXXX` command before adding `Review Notes`, moving the ticket entry to the `## REVIEW` section, changing `Status:` to `Review`, or syncing Lark to `review`.
 
 Do not invoke `writing-plans` again during `start` when the ticket already has `Status: Plan` and `### Implementation Plan`.
 
