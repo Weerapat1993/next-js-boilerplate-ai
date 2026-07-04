@@ -1,0 +1,78 @@
+{
+    "RootLayout": {},
+    "BaseTemplate": {
+        "description": "โค้ดเริ่มต้นสำหรับ Next.js Boilerplate พร้อม Tailwind CSS",
+        "footer_text": "© {year} {name}. สร้างด้วย <author></author>.",
+        "main_navigation_label": "การนำทางหลัก"
+    },
+    "Index": {
+        "meta_title": "การนำเสนอ Next.js Boilerplate",
+        "meta_description": "Next.js Boilerplate คือโค้ดเริ่มต้นที่สมบูรณ์แบบสำหรับโปรเจกต์ของคุณ สร้างแอปพลิเคชัน React ด้วย Next.js framework"
+    },
+    "Counter": {
+        "meta_title": "นับจำนวน",
+        "meta_description": "ตัวอย่างการดำเนินการกับฐานข้อมูล"
+    },
+    "CounterForm": {
+        "presentation": "ค่าตัวนับถูกจัดเก็บในฐานข้อมูลและเพิ่มขึ้นตามค่าที่คุณระบุ",
+        "label_increment": "เพิ่มขึ้นทีละ",
+        "button_increment": "เพิ่ม",
+        "error_increment_range": "ค่าต้องอยู่ระหว่าง 1 ถึง 3"
+    },
+    "CurrentCount": {
+        "count": "จำนวน: {count}"
+    },
+    "About": {
+        "meta_title": "เกี่ยวกับเรา",
+        "meta_description": "คำอธิบายหน้าเกี่ยวกับเรา",
+        "about_paragraph": "ยินดีต้อนรับสู่หน้าเกี่ยวกับเรา! เราคือทีมที่มีความหลงใหลในการสร้างซอฟต์แวร์ที่ยอดเยี่ยม"
+    },
+    "Portfolio": {
+        "meta_title": "ผลงาน",
+        "meta_description": "ยินดีต้อนรับสู่หน้าผลงานของฉัน!"
+    },
+    "PortfolioSlug": {
+        "meta_title": "ผลงาน {slug}",
+        "meta_description": "คำอธิบายผลงาน {slug}",
+        "header": "ผลงาน {slug}",
+        "content": "สร้างชุดสื่อประชาสัมพันธ์และองค์ประกอบแบรนด์สำหรับงานองค์กร ออกแบบธีมที่มีความสอดคล้องกัน รวมถึงโลโก้ โปสเตอร์ แบนเนอร์ และสินทรัพย์ดิจิทัล ผสานเอกลักษณ์แบรนด์ของลูกค้าเข้ากับแนวทางที่ทันสมัยและสร้างสรรค์",
+        "code_review_powered_by": "Code review powered by"
+    },
+    "SignIn": {
+        "meta_title": "เข้าสู่ระบบ",
+        "meta_description": "เข้าสู่ระบบบัญชีของคุณได้อย่างราบรื่นด้วยกระบวนการที่ใช้งานง่าย"
+    },
+    "SignUp": {
+        "meta_title": "สมัครสมาชิก",
+        "meta_description": "สร้างบัญชีได้อย่างง่ายดายผ่านกระบวนการสมัครที่ใช้งานง่าย"
+    },
+    "Dashboard": {
+        "hello_message": "สวัสดี {email}!",
+        "alternative_message": "ต้องการฟีเจอร์ขั้นสูง? Multi-tenancy & Teams, Roles & Permissions, Shadcn UI, End-to-End Typesafety with oRPC, Stripe Payment, Light / Dark mode. ลองดู <url></url>",
+        "max_message": "หรือ ต้องการ Self-hosted auth stack (Better Auth)? ลองดู <url></url>",
+        "stat_counter": "นับจำนวน",
+        "stat_portfolio": "ผลงาน",
+        "stat_account": "บัญชี"
+    },
+    "DashboardLayout": {
+        "meta_title": "แดชบอร์ด",
+        "meta_description": "จัดการบัญชีของคุณจากแดชบอร์ด",
+        "sign_out": "ออกจากระบบ"
+    },
+    "Navigation": {
+        "home": "หน้าแรก",
+        "about": "เกี่ยวกับ",
+        "counter": "นับจำนวน",
+        "portfolio": "ผลงาน",
+        "dashboard": "แดชบอร์ด"
+    },
+    "HomePage": {
+        "hero_title": "Next.js Boilerplate",
+        "hero_subtitle": "จุดเริ่มต้นที่เป็นมิตรกับนักพัฒนาสำหรับ Next.js พร้อมการรับรองตัวตน ฐานข้อมูล i18n และอื่นๆ อีกมากมาย",
+        "hero_cta": "ดูบน GitHub",
+        "feature_grid_title": "สิ่งที่รวมอยู่"
+    },
+    "LocaleSwitcher": {
+        "change_language": "เปลี่ยนภาษา"
+    }
+}
