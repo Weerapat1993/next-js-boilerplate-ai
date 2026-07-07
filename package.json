@@ -36,6 +36,7 @@
     "@sentry/nextjs": "^10.62.0",
     "@t3-oss/env-nextjs": "^0.13.11",
     "antd": "^6.5.0",
+    "axios": "^1.18.1",
     "drizzle-orm": "^0.45.2",
     "next": "^16.2.9",
     "next-intl": "^4.13.1",
