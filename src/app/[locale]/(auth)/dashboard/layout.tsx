@@ -1,8 +1,7 @@
 import type { Metadata } from 'next';
 import { getTranslations, setRequestLocale } from 'next-intl/server';
+import { NavUser } from '@/components/layouts/NavUser';
 import { SidebarLayout } from '@/components/layouts/SidebarLayout';
-import { LocaleSwitcher } from '@/components/LocaleSwitcher';
-import { SignOutThemeResetButton } from '@/components/SignOutThemeResetButton';
 
 export async function generateMetadata(props: {
   children: React.ReactNode;
@@ -26,20 +25,9 @@ export default async function DashboardLayout(props: {
 }) {
   const { locale } = await props.params;
   setRequestLocale(locale);
-  const t = await getTranslations({
-    locale,
-    namespace: 'DashboardLayout',
-  });
 
   return (
-    <SidebarLayout
-      sidebarFooter={
-        <div className="flex flex-col gap-1">
-          <LocaleSwitcher />
-          <SignOutThemeResetButton label={t('sign_out')} />
-        </div>
-      }
-    >
+    <SidebarLayout sidebarFooter={<NavUser />}>
       {props.children}
     </SidebarLayout>
   );

@@ -1,5 +1,6 @@
 import { getTranslations, setRequestLocale } from 'next-intl/server';
 import { AppearanceForm } from '@/components/AppearanceForm';
+import { Separator } from '@/components/ui/separator';
 import { getThemeMode } from '@/libs/ThemeMode';
 
 export default async function SettingsAppearancePage(props: {
@@ -12,10 +13,16 @@ export default async function SettingsAppearancePage(props: {
   const themeMode = await getThemeMode();
 
   return (
-    <div>
-      <h1 className="mb-6 text-3xl font-bold tracking-tight text-gray-900 dark:text-gray-100">
-        {t('page_title')}
-      </h1>
+    <div className="max-w-2xl space-y-6">
+      <div>
+        <h2 className="text-lg font-medium text-gray-900 dark:text-gray-100">
+          {t('page_title')}
+        </h2>
+        <p className="text-sm text-gray-500 dark:text-gray-400">
+          {t('page_description')}
+        </p>
+      </div>
+      <Separator />
       <AppearanceForm currentThemeMode={themeMode} />
     </div>
   );

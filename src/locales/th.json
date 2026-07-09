@@ -56,16 +56,20 @@
   },
   "DashboardLayout": {
     "meta_title": "แดชบอร์ด",
-    "meta_description": "จัดการบัญชีของคุณจากแดชบอร์ด",
-    "sign_out": "ออกจากระบบ"
+    "meta_description": "จัดการบัญชีของคุณจากแดชบอร์ด"
   },
   "Navigation": {
+    "group_platform": "แพลตฟอร์ม",
     "home": "หน้าแรก",
     "about": "เกี่ยวกับ",
     "counter": "นับจำนวน",
     "portfolio": "ผลงาน",
-    "dashboard": "แดชบอร์ด",
-    "settings_appearance": "การแสดงผล"
+    "dashboard": "แดชบอร์ด"
+  },
+  "NavUser": {
+    "settings": "การตั้งค่า",
+    "language": "ภาษา",
+    "sign_out": "ออกจากระบบ"
   },
   "HomePage": {
     "hero_title": "Next.js Boilerplate",
@@ -76,8 +80,14 @@
   "LocaleSwitcher": {
     "change_language": "เปลี่ยนภาษา"
   },
+  "SettingsLayout": {
+    "title": "การตั้งค่า",
+    "description": "จัดการบัญชีและการตั้งค่าแอปของคุณ",
+    "nav_appearance": "การแสดงผล"
+  },
   "SettingsAppearancePage": {
     "page_title": "การแสดงผล",
+    "page_description": "เลือกรูปลักษณ์ของแอปบนอุปกรณ์ของคุณ",
     "theme_light": "สว่าง",
     "theme_dark": "มืด",
     "theme_system": "ตามระบบ",

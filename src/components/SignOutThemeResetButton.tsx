@@ -14,10 +14,10 @@ const clearThemeModeCookie = () => {
   }
 };
 
-export const SignOutThemeResetButton = (props: { label: string }) => (
+export const SignOutThemeResetButton = (props: { label: React.ReactNode; className?: string }) => (
   <SignOutButton>
     <button
-      className="border-none text-gray-700 hover:text-gray-900"
+      className={props.className ?? 'border-none text-gray-700 hover:text-gray-900'}
       onClick={clearThemeModeCookie}
       type="button"
     >

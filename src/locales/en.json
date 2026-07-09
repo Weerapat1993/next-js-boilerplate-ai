@@ -56,16 +56,20 @@
   },
   "DashboardLayout": {
     "meta_title": "Dashboard",
-    "meta_description": "Manage your account from the dashboard.",
-    "sign_out": "Sign out"
+    "meta_description": "Manage your account from the dashboard."
   },
   "Navigation": {
+    "group_platform": "Platform",
     "home": "Home",
     "about": "About",
     "counter": "Counter",
     "portfolio": "Portfolio",
-    "dashboard": "Dashboard",
-    "settings_appearance": "Appearance"
+    "dashboard": "Dashboard"
+  },
+  "NavUser": {
+    "settings": "Settings",
+    "language": "Language",
+    "sign_out": "Sign out"
   },
   "HomePage": {
     "hero_title": "Next.js Boilerplate",
@@ -76,8 +80,14 @@
   "LocaleSwitcher": {
     "change_language": "Change language"
   },
+  "SettingsLayout": {
+    "title": "Settings",
+    "description": "Manage your account and app preferences.",
+    "nav_appearance": "Appearance"
+  },
   "SettingsAppearancePage": {
     "page_title": "Appearance",
+    "page_description": "Choose how the app looks on your device.",
     "theme_light": "Light",
     "theme_dark": "Dark",
     "theme_system": "System",
