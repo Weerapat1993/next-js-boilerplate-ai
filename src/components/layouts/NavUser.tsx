@@ -15,7 +15,6 @@ import {
 } from '@/components/ui/dropdown-menu';
 import { SidebarMenu, SidebarMenuButton, SidebarMenuItem, useSidebar } from '@/components/ui/sidebar';
 import { Link } from '@/libs/I18nNavigation';
-import { LocaleSwitcher } from '../LocaleSwitcher';
 import { SignOutThemeResetButton } from '../SignOutThemeResetButton';
 
 const getInitials = (name: string) =>
@@ -41,10 +40,6 @@ export const NavUser = () => {
 
   return (
     <SidebarMenu>
-      <SidebarMenuItem className="flex items-center justify-between gap-2 px-2 group-data-[collapsible=icon]:hidden">
-        <span className="text-sm text-sidebar-foreground">{t('language')}</span>
-        <LocaleSwitcher />
-      </SidebarMenuItem>
       <SidebarMenuItem>
         <DropdownMenu>
           <DropdownMenuTrigger
@@ -106,7 +101,6 @@ export const NavUser = () => {
           </DropdownMenuContent>
         </DropdownMenu>
       </SidebarMenuItem>
-
     </SidebarMenu>
   );
 };

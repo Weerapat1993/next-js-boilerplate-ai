@@ -68,7 +68,6 @@
   },
   "NavUser": {
     "settings": "Settings",
-    "language": "Language",
     "sign_out": "Sign out"
   },
   "HomePage": {
@@ -92,6 +91,8 @@
     "theme_dark": "Dark",
     "theme_system": "System",
     "save_button": "Save",
-    "save_success": "Preference saved"
+    "save_success": "Preference saved",
+    "language_title": "Language",
+    "language_description": "Choose the language used across the app."
   }
 }

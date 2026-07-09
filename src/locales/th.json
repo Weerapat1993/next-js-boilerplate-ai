@@ -68,7 +68,6 @@
   },
   "NavUser": {
     "settings": "การตั้งค่า",
-    "language": "ภาษา",
     "sign_out": "ออกจากระบบ"
   },
   "HomePage": {
@@ -92,6 +91,8 @@
     "theme_dark": "มืด",
     "theme_system": "ตามระบบ",
     "save_button": "บันทึก",
-    "save_success": "บันทึกการตั้งค่าแล้ว"
+    "save_success": "บันทึกการตั้งค่าแล้ว",
+    "language_title": "ภาษา",
+    "language_description": "เลือกภาษาที่ใช้ในแอป"
   }
 }

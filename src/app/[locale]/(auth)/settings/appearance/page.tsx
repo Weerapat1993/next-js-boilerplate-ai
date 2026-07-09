@@ -1,5 +1,6 @@
 import { getTranslations, setRequestLocale } from 'next-intl/server';
 import { AppearanceForm } from '@/components/AppearanceForm';
+import { LocaleSwitcher } from '@/components/LocaleSwitcher';
 import { Separator } from '@/components/ui/separator';
 import { getThemeMode } from '@/libs/ThemeMode';
 
@@ -24,6 +25,18 @@ export default async function SettingsAppearancePage(props: {
       </div>
       <Separator />
       <AppearanceForm currentThemeMode={themeMode} />
+      <Separator />
+      <div className="flex items-center justify-between gap-4">
+        <div>
+          <h3 className="text-sm font-medium text-gray-900 dark:text-gray-100">
+            {t('language_title')}
+          </h3>
+          <p className="text-sm text-gray-500 dark:text-gray-400">
+            {t('language_description')}
+          </p>
+        </div>
+        <LocaleSwitcher />
+      </div>
     </div>
   );
 }
