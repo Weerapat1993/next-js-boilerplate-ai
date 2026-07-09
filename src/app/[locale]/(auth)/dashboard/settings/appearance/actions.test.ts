@@ -7,6 +7,7 @@ const valuesMock = vi.fn<
 >(() => ({ onConflictDoUpdate: onConflictDoUpdateMock }));
 const insertMock = vi.fn<() => { values: typeof valuesMock }>(() => ({ values: valuesMock }));
 const revalidatePathMock = vi.fn<(path: string, type?: string) => void>();
+const cookieSetMock = vi.fn<(name: string, value: string, options: unknown) => void>();
 
 vi.mock('@clerk/nextjs/server', () => ({
   auth: () => authMock(),
@@ -14,6 +15,10 @@ vi.mock('@clerk/nextjs/server', () => ({
 
 vi.mock('next/cache', () => ({
   revalidatePath: (path: string, type?: string) => revalidatePathMock(path, type),
+}));
+
+vi.mock('next/headers', () => ({
+  cookies: () => Promise.resolve({ set: cookieSetMock }),
 }));
 
 vi.mock('@/libs/DB', () => ({
@@ -54,6 +59,7 @@ describe('updateThemeMode', () => {
 
     expect(result.status).toBe('success');
     expect(valuesMock).toHaveBeenCalledWith({ clerkUserId: 'user_1', themeMode: 'dark' });
+    expect(cookieSetMock).toHaveBeenCalledWith('theme_mode', 'dark', expect.any(Object));
     expect(revalidatePathMock).toHaveBeenCalledWith('/', 'layout');
   });
 });
