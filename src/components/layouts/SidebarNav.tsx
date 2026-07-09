@@ -48,7 +48,7 @@ export const SidebarNav = (props: { footerSlot?: React.ReactNode }) => {
     { href: '/counter/', label: t('counter') },
     { href: '/portfolio/', label: t('portfolio') },
     { href: '/dashboard/', label: t('dashboard') },
-    { href: '/dashboard/settings/appearance/', label: t('settings_appearance') },
+    { href: '/settings/appearance/', label: t('settings_appearance') },
   ];
 
   const appName = (

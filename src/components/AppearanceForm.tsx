@@ -2,8 +2,8 @@
 
 import { useTranslations } from 'next-intl';
 import { useActionState } from 'react';
-import { updateThemeMode } from '@/app/[locale]/(auth)/dashboard/settings/appearance/actions';
-import type { UpdateThemeModeState } from '@/app/[locale]/(auth)/dashboard/settings/appearance/actions';
+import { updateThemeMode } from '@/app/[locale]/(auth)/settings/appearance/actions';
+import type { UpdateThemeModeState } from '@/app/[locale]/(auth)/settings/appearance/actions';
 
 const initialState: UpdateThemeModeState = { status: 'idle' };
 
