@@ -80,8 +80,6 @@
     "change_language": "Change language"
   },
   "SettingsLayout": {
-    "title": "Settings",
-    "description": "Manage your account and app preferences.",
     "nav_appearance": "Appearance"
   },
   "SettingsAppearancePage": {

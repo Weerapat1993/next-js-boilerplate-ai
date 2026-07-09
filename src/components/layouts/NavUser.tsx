@@ -81,7 +81,7 @@ export const NavUser = () => {
             </DropdownMenuGroup>
             <DropdownMenuSeparator />
             <DropdownMenuGroup>
-              <DropdownMenuItem render={<Link href="/settings/appearance/" />}>
+              <DropdownMenuItem render={<Link href="/settings/" />}>
                 <Settings />
                 {t('settings')}
               </DropdownMenuItem>

@@ -80,8 +80,6 @@
     "change_language": "เปลี่ยนภาษา"
   },
   "SettingsLayout": {
-    "title": "การตั้งค่า",
-    "description": "จัดการบัญชีและการตั้งค่าแอปของคุณ",
     "nav_appearance": "การแสดงผล"
   },
   "SettingsAppearancePage": {

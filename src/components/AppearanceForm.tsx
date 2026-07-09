@@ -2,8 +2,8 @@
 
 import { useTranslations } from 'next-intl';
 import { useActionState, useState } from 'react';
-import { updateThemeMode } from '@/app/[locale]/(auth)/settings/appearance/actions';
-import type { UpdateThemeModeState } from '@/app/[locale]/(auth)/settings/appearance/actions';
+import { updateThemeMode } from '@/app/[locale]/(auth)/settings/actions';
+import type { UpdateThemeModeState } from '@/app/[locale]/(auth)/settings/actions';
 import { Button } from '@/components/ui/button';
 import { Label } from '@/components/ui/label';
 import { RadioGroup, RadioGroupItem } from '@/components/ui/radio-group';
