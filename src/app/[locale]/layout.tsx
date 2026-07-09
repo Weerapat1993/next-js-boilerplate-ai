@@ -1,10 +1,16 @@
 import type { Metadata, Viewport } from 'next';
 import { hasLocale, NextIntlClientProvider } from 'next-intl';
 import { setRequestLocale } from 'next-intl/server';
+import { Instrument_Sans } from 'next/font/google';
 import { notFound } from 'next/navigation';
 import { routing } from '@/libs/I18nRouting';
 import { getThemeMode } from '@/libs/ThemeMode';
 import '@/styles/global.css';
+
+const instrumentSans = Instrument_Sans({
+  subsets: ['latin'],
+  variable: '--font-sans',
+});
 
 export const metadata: Metadata = {
   icons: [
@@ -62,7 +68,11 @@ export default async function RootLayout(props: {
   const htmlClassName = themeMode === 'dark' ? 'dark' : '';
 
   return (
-    <html lang={locale} className={htmlClassName} suppressHydrationWarning>
+    <html
+      lang={locale}
+      className={`${htmlClassName} ${instrumentSans.variable}`}
+      suppressHydrationWarning
+    >
       <head>
         {themeMode === 'system' && (
           <script dangerouslySetInnerHTML={{ __html: SYSTEM_THEME_SCRIPT }} />

@@ -1,5 +1,4 @@
 import { setRequestLocale } from 'next-intl/server';
-import { LocaleSwitcher } from '@/components/LocaleSwitcher';
 import { SidebarLayout } from '@/components/layouts/SidebarLayout';
 
 export default async function MarketingLayout(props: {
@@ -10,7 +9,7 @@ export default async function MarketingLayout(props: {
   setRequestLocale(locale);
 
   return (
-    <SidebarLayout sidebarFooter={<LocaleSwitcher />}>
+    <SidebarLayout>
       {props.children}
     </SidebarLayout>
   );
