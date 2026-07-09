@@ -1,21 +1,23 @@
 import { describe, expect, it, vi } from 'vitest';
 
-const authMock = vi.fn();
-const onConflictDoUpdateMock = vi.fn().mockResolvedValue(undefined);
-const valuesMock = vi.fn(() => ({ onConflictDoUpdate: onConflictDoUpdateMock }));
-const insertMock = vi.fn(() => ({ values: valuesMock }));
-const revalidatePathMock = vi.fn();
+const authMock = vi.fn<() => Promise<{ userId: string | null }>>();
+const onConflictDoUpdateMock = vi.fn<() => Promise<void>>().mockResolvedValue();
+const valuesMock = vi.fn<
+  (values: unknown) => { onConflictDoUpdate: typeof onConflictDoUpdateMock }
+>(() => ({ onConflictDoUpdate: onConflictDoUpdateMock }));
+const insertMock = vi.fn<() => { values: typeof valuesMock }>(() => ({ values: valuesMock }));
+const revalidatePathMock = vi.fn<(path: string, type?: string) => void>();
 
 vi.mock('@clerk/nextjs/server', () => ({
   auth: () => authMock(),
 }));
 
 vi.mock('next/cache', () => ({
-  revalidatePath: (...args: unknown[]) => revalidatePathMock(...args),
+  revalidatePath: (path: string, type?: string) => revalidatePathMock(path, type),
 }));
 
 vi.mock('@/libs/DB', () => ({
-  db: { insert: (...args: unknown[]) => insertMock(...args) },
+  db: { insert: () => insertMock() },
 }));
 
 describe('updateThemeMode', () => {
