@@ -41,6 +41,10 @@ export const NavUser = () => {
 
   return (
     <SidebarMenu>
+      <SidebarMenuItem className="flex items-center justify-between gap-2 px-2 group-data-[collapsible=icon]:hidden">
+        <span className="text-sm text-sidebar-foreground">{t('language')}</span>
+        <LocaleSwitcher />
+      </SidebarMenuItem>
       <SidebarMenuItem>
         <DropdownMenu>
           <DropdownMenuTrigger
@@ -86,12 +90,6 @@ export const NavUser = () => {
                 <Settings />
                 {t('settings')}
               </DropdownMenuItem>
-              <DropdownMenuItem
-                render={<div className="flex w-full items-center justify-between gap-2" />}
-              >
-                <span>{t('language')}</span>
-                <LocaleSwitcher />
-              </DropdownMenuItem>
             </DropdownMenuGroup>
             <DropdownMenuSeparator />
             <DropdownMenuItem variant="destructive">
@@ -108,6 +106,7 @@ export const NavUser = () => {
           </DropdownMenuContent>
         </DropdownMenu>
       </SidebarMenuItem>
+
     </SidebarMenu>
   );
 };
