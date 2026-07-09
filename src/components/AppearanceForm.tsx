@@ -1,7 +1,7 @@
 'use client';
 
 import { useTranslations } from 'next-intl';
-import { useActionState } from 'react';
+import { useActionState, useState } from 'react';
 import { updateThemeMode } from '@/app/[locale]/(auth)/settings/appearance/actions';
 import type { UpdateThemeModeState } from '@/app/[locale]/(auth)/settings/appearance/actions';
 import { Button } from '@/components/ui/button';
@@ -15,10 +15,11 @@ const THEME_OPTIONS = ['light', 'dark', 'system'] as const;
 export const AppearanceForm = (props: { currentThemeMode: 'light' | 'dark' | 'system' }) => {
   const t = useTranslations('SettingsAppearancePage');
   const [state, formAction, isPending] = useActionState(updateThemeMode, initialState);
+  const [themeMode, setThemeMode] = useState(props.currentThemeMode);
 
   return (
     <form action={formAction} className="max-w-md space-y-4">
-      <RadioGroup defaultValue={props.currentThemeMode} name="themeMode" className="gap-3">
+      <RadioGroup value={themeMode} onValueChange={setThemeMode} name="themeMode" className="gap-3">
         {THEME_OPTIONS.map((option) => (
           <div key={option} className="flex items-center gap-2">
             <RadioGroupItem value={option} id={`theme-${option}`} />
