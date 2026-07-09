@@ -8,8 +8,9 @@ kanban-plugin: board
 
 ## TODO
 
-
 ## PLAN
+
+- [NEX-1002](tasks/NEX-1002.md): Settings appearance — theme mode setting
 
 ## INPROGRESS
 
