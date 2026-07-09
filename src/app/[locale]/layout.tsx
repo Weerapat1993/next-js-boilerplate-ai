@@ -62,7 +62,7 @@ export default async function RootLayout(props: {
   const htmlClassName = themeMode === 'dark' ? 'dark' : '';
 
   return (
-    <html lang={locale} className={htmlClassName}>
+    <html lang={locale} className={htmlClassName} suppressHydrationWarning>
       <head>
         {themeMode === 'system' && (
           <script dangerouslySetInnerHTML={{ __html: SYSTEM_THEME_SCRIPT }} />
