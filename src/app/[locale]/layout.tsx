@@ -3,6 +3,7 @@ import { hasLocale, NextIntlClientProvider } from 'next-intl';
 import { setRequestLocale } from 'next-intl/server';
 import { notFound } from 'next/navigation';
 import { routing } from '@/libs/I18nRouting';
+import { getThemeMode } from '@/libs/ThemeMode';
 import '@/styles/global.css';
 
 export const metadata: Metadata = {
@@ -39,6 +40,12 @@ export function generateStaticParams() {
   return routing.locales.map((locale) => ({ locale }));
 }
 
+const SYSTEM_THEME_SCRIPT = `
+if (window.matchMedia('(prefers-color-scheme: dark)').matches) {
+  document.documentElement.classList.add('dark');
+}
+`;
+
 export default async function RootLayout(props: {
   children: React.ReactNode;
   params: Promise<{ locale: string }>;
@@ -51,12 +58,18 @@ export default async function RootLayout(props: {
 
   setRequestLocale(locale);
 
+  const themeMode = await getThemeMode();
+  const htmlClassName = themeMode === 'dark' ? 'dark' : '';
+
   return (
-    <html lang={locale}>
+    <html lang={locale} className={htmlClassName}>
+      <head>
+        {themeMode === 'system' && (
+          <script dangerouslySetInnerHTML={{ __html: SYSTEM_THEME_SCRIPT }} />
+        )}
+      </head>
       <body>
-        <NextIntlClientProvider>
-          {props.children}
-        </NextIntlClientProvider>
+        <NextIntlClientProvider>{props.children}</NextIntlClientProvider>
       </body>
     </html>
   );
