@@ -1,8 +1,8 @@
-import { SignOutButton } from '@clerk/nextjs';
 import type { Metadata } from 'next';
 import { getTranslations, setRequestLocale } from 'next-intl/server';
-import { LocaleSwitcher } from '@/components/LocaleSwitcher';
 import { SidebarLayout } from '@/components/layouts/SidebarLayout';
+import { LocaleSwitcher } from '@/components/LocaleSwitcher';
+import { SignOutThemeResetButton } from '@/components/SignOutThemeResetButton';
 
 export async function generateMetadata(props: {
   children: React.ReactNode;
@@ -36,11 +36,7 @@ export default async function DashboardLayout(props: {
       sidebarFooter={
         <div className="flex flex-col gap-1">
           <LocaleSwitcher />
-          <SignOutButton>
-            <button className="border-none text-gray-700 hover:text-gray-900" type="button">
-              {t('sign_out')}
-            </button>
-          </SignOutButton>
+          <SignOutThemeResetButton label={t('sign_out')} />
         </div>
       }
     >

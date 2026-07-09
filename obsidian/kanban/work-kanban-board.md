@@ -10,8 +10,6 @@ kanban-plugin: board
 
 ## PLAN
 
-- [NEX-1002](tasks/NEX-1002.md): Settings appearance — theme mode setting
-
 ## INPROGRESS
 
 ## REVIEW
@@ -19,6 +17,8 @@ kanban-plugin: board
 - [NEX-1001](tasks/NEX-1001.md): Redesign Landing Page UI (Apple Developer Docs Style)
 
 ## DONE
+
+- [NEX-1002](tasks/NEX-1002.md): Settings appearance — theme mode setting
 
 ## CLOSED
 

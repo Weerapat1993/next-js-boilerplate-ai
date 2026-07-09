@@ -64,7 +64,8 @@
     "about": "About",
     "counter": "Counter",
     "portfolio": "Portfolio",
-    "dashboard": "Dashboard"
+    "dashboard": "Dashboard",
+    "settings_appearance": "Appearance"
   },
   "HomePage": {
     "hero_title": "Next.js Boilerplate",
@@ -74,5 +75,13 @@
   },
   "LocaleSwitcher": {
     "change_language": "Change language"
+  },
+  "SettingsAppearancePage": {
+    "page_title": "Appearance",
+    "theme_light": "Light",
+    "theme_dark": "Dark",
+    "theme_system": "System",
+    "save_button": "Save",
+    "save_success": "Preference saved"
   }
 }
