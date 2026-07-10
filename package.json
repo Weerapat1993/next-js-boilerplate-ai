@@ -102,5 +102,6 @@
     "plugins": {
       "@tailwindcss/postcss": {}
     }
-  }
+  },
+  "version": null
 }
