@@ -8,6 +8,8 @@ kanban-plugin: board
 
 ## TODO
 
+- [NEX-1003](tasks/NEX-1003.md): Galleries table with Supabase S3 image upload and CRUD
+
 ## PLAN
 
 ## INPROGRESS
