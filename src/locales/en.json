@@ -97,6 +97,7 @@
     "meta_title": "Gallery",
     "meta_description": "Upload and manage your gallery images.",
     "empty_state": "No gallery images yet.",
+    "add_button": "Add image",
     "title_label": "Title",
     "image_label": "Image",
     "create_button": "Add image",

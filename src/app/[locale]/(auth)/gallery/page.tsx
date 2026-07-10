@@ -2,7 +2,7 @@ import { auth } from '@clerk/nextjs/server';
 import type { Metadata } from 'next';
 import { getTranslations, setRequestLocale } from 'next-intl/server';
 import { redirect } from 'next/navigation';
-import { GalleryForm } from '@/components/gallery/GalleryForm';
+import { GalleryCreateDialog } from '@/components/gallery/GalleryCreateDialog';
 import { GalleryList } from '@/components/gallery/GalleryList';
 import { listGalleries } from './actions';
 
@@ -32,10 +32,12 @@ export default async function GalleryPage(props: { params: Promise<{ locale: str
 
   return (
     <div className="space-y-6">
-      <h1 className="text-3xl font-bold tracking-tight text-gray-900 dark:text-gray-100">
-        {t('meta_title')}
-      </h1>
-      <GalleryForm />
+      <div className="flex items-center justify-between">
+        <h1 className="text-3xl font-bold tracking-tight text-gray-900 dark:text-gray-100">
+          {t('meta_title')}
+        </h1>
+        <GalleryCreateDialog />
+      </div>
       <GalleryList items={galleries} />
     </div>
   );
