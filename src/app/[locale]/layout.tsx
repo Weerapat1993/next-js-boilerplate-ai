@@ -1,3 +1,4 @@
+import { ClerkProvider } from '@clerk/nextjs';
 import type { Metadata, Viewport } from 'next';
 import { hasLocale, NextIntlClientProvider } from 'next-intl';
 import { setRequestLocale } from 'next-intl/server';
@@ -5,6 +6,7 @@ import { Instrument_Sans } from 'next/font/google';
 import { notFound } from 'next/navigation';
 import { routing } from '@/libs/I18nRouting';
 import { getThemeMode } from '@/libs/ThemeMode';
+import { ClerkLocalizations } from '@/utils/AppConfig';
 import '@/styles/global.css';
 
 const instrumentSans = Instrument_Sans({
@@ -60,6 +62,8 @@ export default async function RootLayout(props: {
 
   const themeMode = await getThemeMode();
   const htmlClassName = themeMode === 'dark' ? 'dark' : '';
+  const clerkLocale =
+    ClerkLocalizations.supportedLocales[locale] ?? ClerkLocalizations.defaultLocale;
 
   return (
     <html
@@ -68,7 +72,19 @@ export default async function RootLayout(props: {
       suppressHydrationWarning
     >
       <body>
-        <NextIntlClientProvider>{props.children}</NextIntlClientProvider>
+        <ClerkProvider
+          appearance={{
+            cssLayerName: 'clerk', // Ensure Clerk is compatible with Tailwind CSS v4
+          }}
+          localization={clerkLocale}
+          signInUrl="/sign-in"
+          signUpUrl="/sign-up"
+          signInFallbackRedirectUrl="/dashboard"
+          signUpFallbackRedirectUrl="/dashboard"
+          afterSignOutUrl="/"
+        >
+          <NextIntlClientProvider>{props.children}</NextIntlClientProvider>
+        </ClerkProvider>
       </body>
     </html>
   );

@@ -1,5 +1,6 @@
 import { setRequestLocale } from 'next-intl/server';
 import { SidebarLayout } from '@/components/layouts/SidebarLayout';
+import { NavUser } from '@/components/layouts/NavUser';
 
 export default async function MarketingLayout(props: {
   children: React.ReactNode;
@@ -9,7 +10,7 @@ export default async function MarketingLayout(props: {
   setRequestLocale(locale);
 
   return (
-    <SidebarLayout>
+    <SidebarLayout sidebarFooter={<NavUser />}>
       {props.children}
     </SidebarLayout>
   );
