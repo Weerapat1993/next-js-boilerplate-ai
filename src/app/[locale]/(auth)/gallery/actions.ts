@@ -13,7 +13,7 @@ export type GalleryActionState = {
   errorMessage?: string;
 };
 
-const GALLERY_PATH = '/dashboard/gallery';
+const GALLERY_PATH = '/gallery';
 
 const buildImageKey = (clerkUserId: string, fileName: string): string => {
   const extension = fileName.split('.').pop() ?? 'jpg';

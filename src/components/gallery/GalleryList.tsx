@@ -2,8 +2,8 @@
 
 import { useTranslations } from 'next-intl';
 import { useActionState, useEffect, useState } from 'react';
-import type { GalleryActionState } from '@/app/[locale]/(auth)/dashboard/gallery/actions';
-import { deleteGallery, updateGallery } from '@/app/[locale]/(auth)/dashboard/gallery/actions';
+import type { GalleryActionState } from '@/app/[locale]/(auth)/gallery/actions';
+import { deleteGallery, updateGallery } from '@/app/[locale]/(auth)/gallery/actions';
 import { Button } from '@/components/ui/button';
 import { Card } from '@/components/ui/card';
 import { Input } from '@/components/ui/input';

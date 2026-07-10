@@ -41,7 +41,7 @@ export const SidebarNav = (props: { footerSlot?: React.ReactNode }) => {
     { href: '/counter/', label: t('counter'), icon: Hash },
     { href: '/portfolio/', label: t('portfolio'), icon: Briefcase },
     { href: '/dashboard/', label: t('dashboard'), icon: LayoutDashboard },
-    { href: '/dashboard/gallery/', label: t('gallery'), icon: Image },
+    { href: '/gallery/', label: t('gallery'), icon: Image },
   ];
 
   return (
@@ -53,7 +53,9 @@ export const SidebarNav = (props: { footerSlot?: React.ReactNode }) => {
               <div className="flex aspect-square size-8 items-center justify-center rounded-lg bg-sidebar-primary text-sidebar-primary-foreground">
                 <Boxes className="size-4" />
               </div>
-              <span className="truncate font-semibold group-data-[collapsible=icon]:hidden">{AppConfig.name}</span>
+              <span className="truncate font-semibold group-data-[collapsible=icon]:hidden">
+                {AppConfig.name}
+              </span>
             </SidebarMenuButton>
           </SidebarMenuItem>
         </SidebarMenu>
