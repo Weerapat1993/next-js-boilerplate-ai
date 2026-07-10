@@ -1,38 +1,62 @@
 'use client';
 
+import { Moon, Sun } from 'lucide-react';
 import { useTranslations } from 'next-intl';
-import { useActionState, useState } from 'react';
+import { startTransition, useActionState, useState } from 'react';
 import { updateThemeMode } from '@/app/[locale]/(auth)/settings/actions';
 import type { UpdateThemeModeState } from '@/app/[locale]/(auth)/settings/actions';
+import { ButtonGroup } from '@/components/ui/button-group';
 import { Button } from '@/components/ui/button';
-import { Label } from '@/components/ui/label';
-import { RadioGroup, RadioGroupItem } from '@/components/ui/radio-group';
 
 const initialState: UpdateThemeModeState = { status: 'idle' };
 
-const THEME_OPTIONS = ['light', 'dark', 'system'] as const;
+const THEME_OPTIONS = [
+  { value: 'light', icon: Sun },
+  { value: 'dark', icon: Moon },
+] as const;
 
-export const AppearanceForm = (props: { currentThemeMode: 'light' | 'dark' | 'system' }) => {
+const applyThemeClass = (mode: 'light' | 'dark') => {
+  document.documentElement.classList.toggle('dark', mode === 'dark');
+};
+
+export const AppearanceForm = (props: { currentThemeMode: 'light' | 'dark' }) => {
   const t = useTranslations('SettingsAppearancePage');
   const [state, formAction, isPending] = useActionState(updateThemeMode, initialState);
   const [themeMode, setThemeMode] = useState(props.currentThemeMode);
 
+  const selectTheme = (mode: 'light' | 'dark') => {
+    setThemeMode(mode);
+    applyThemeClass(mode);
+
+    const formData = new FormData();
+    formData.append('themeMode', mode);
+    startTransition(() => formAction(formData));
+  };
+
   return (
-    <form action={formAction} className="max-w-md space-y-4">
-      <RadioGroup value={themeMode} onValueChange={setThemeMode} name="themeMode" className="gap-3">
+    <div className="max-w-md space-y-2">
+      <ButtonGroup>
         {THEME_OPTIONS.map((option) => (
-          <div key={option} className="flex items-center gap-2">
-            <RadioGroupItem value={option} id={`theme-${option}`} />
-            <Label htmlFor={`theme-${option}`}>{t(`theme_${option}`)}</Label>
-          </div>
+          <Button
+            key={option.value}
+            aria-pressed={themeMode === option.value}
+            disabled={isPending}
+            onClick={() => selectTheme(option.value)}
+            size="sm"
+            type="button"
+            variant={themeMode === option.value ? 'default' : 'outline'}
+          >
+            <option.icon />
+            {t(`theme_${option.value}`)}
+          </Button>
         ))}
-      </RadioGroup>
-      <Button disabled={isPending} type="submit">
-        {t('save_button')}
-      </Button>
+      </ButtonGroup>
       {state.status === 'success' && (
         <p className="text-sm text-green-600 dark:text-green-400">{t('save_success')}</p>
       )}
-    </form>
+      {state.status === 'error' && (
+        <p className="text-sm text-destructive">{t('save_error')}</p>
+      )}
+    </div>
   );
 };

@@ -87,9 +87,8 @@
     "page_description": "เลือกรูปลักษณ์ของแอปบนอุปกรณ์ของคุณ",
     "theme_light": "สว่าง",
     "theme_dark": "มืด",
-    "theme_system": "ตามระบบ",
-    "save_button": "บันทึก",
     "save_success": "บันทึกการตั้งค่าแล้ว",
+    "save_error": "บันทึกไม่สำเร็จ ลองใหม่อีกครั้ง",
     "language_title": "ภาษา",
     "language_description": "เลือกภาษาที่ใช้ในแอป"
   }

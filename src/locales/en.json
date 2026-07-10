@@ -87,9 +87,8 @@
     "page_description": "Choose how the app looks on your device.",
     "theme_light": "Light",
     "theme_dark": "Dark",
-    "theme_system": "System",
-    "save_button": "Save",
     "save_success": "Preference saved",
+    "save_error": "Couldn't save your preference. Try again.",
     "language_title": "Language",
     "language_description": "Choose the language used across the app."
   }

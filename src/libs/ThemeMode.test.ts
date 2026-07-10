@@ -36,29 +36,29 @@ describe('getThemeMode', () => {
     authMock.mockResolvedValueOnce({ userId: null });
     const { getThemeMode } = await import('./ThemeMode');
 
-    await expect(getThemeMode()).resolves.toBe('system');
+    await expect(getThemeMode()).resolves.toBe('light');
   });
 
-  it('returns system when auth() throws (route not wrapped by clerkMiddleware)', async () => {
+  it('returns light when auth() throws (route not wrapped by clerkMiddleware)', async () => {
     authMock.mockRejectedValueOnce(new Error('clerkMiddleware() was not run'));
     const { getThemeMode } = await import('./ThemeMode');
 
-    await expect(getThemeMode()).resolves.toBe('system');
+    await expect(getThemeMode()).resolves.toBe('light');
   });
 
-  it('returns system when signed out', async () => {
+  it('returns light when signed out', async () => {
     authMock.mockResolvedValueOnce({ userId: null });
     const { getThemeMode } = await import('./ThemeMode');
 
-    await expect(getThemeMode()).resolves.toBe('system');
+    await expect(getThemeMode()).resolves.toBe('light');
   });
 
-  it('returns system when signed in with no stored preference', async () => {
+  it('returns light when signed in with no stored preference', async () => {
     authMock.mockResolvedValueOnce({ userId: 'user_1' });
     selectMock.mockResolvedValueOnce([]);
     const { getThemeMode } = await import('./ThemeMode');
 
-    await expect(getThemeMode()).resolves.toBe('system');
+    await expect(getThemeMode()).resolves.toBe('light');
   });
 
   it('returns the stored preference when signed in', async () => {

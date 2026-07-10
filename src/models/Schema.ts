@@ -26,9 +26,9 @@ export const counterSchema = pgTable('counter', {
 export const userPreferencesSchema = pgTable('user_preferences', {
   id: uuid('id').primaryKey().defaultRandom(),
   clerkUserId: text('clerk_user_id').notNull().unique(),
-  themeMode: text('theme_mode', { enum: ['light', 'dark', 'system'] })
+  themeMode: text('theme_mode', { enum: ['light', 'dark'] })
     .notNull()
-    .default('system'),
+    .default('light'),
   createdAt: timestamp('created_at', { mode: 'date' }).defaultNow().notNull(),
   updatedAt: timestamp('updated_at', { mode: 'date' })
     .defaultNow()

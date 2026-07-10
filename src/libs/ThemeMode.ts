@@ -4,12 +4,12 @@ import { cookies } from 'next/headers';
 import { db } from '@/libs/DB';
 import { userPreferencesSchema } from '@/models/Schema';
 
-export type ThemeMode = 'light' | 'dark' | 'system';
+export type ThemeMode = 'light' | 'dark';
 
 export const THEME_MODE_COOKIE = 'theme_mode';
 
 const isThemeMode = (value: string | undefined): value is ThemeMode =>
-  value === 'light' || value === 'dark' || value === 'system';
+  value === 'light' || value === 'dark';
 
 /**
  * Resolves the current request's theme preference.
@@ -36,7 +36,7 @@ export const getThemeMode = async (): Promise<ThemeMode> => {
   }
 
   if (!userId) {
-    return 'system';
+    return 'light';
   }
 
   const rows = await db
@@ -44,5 +44,5 @@ export const getThemeMode = async (): Promise<ThemeMode> => {
     .from(userPreferencesSchema)
     .where(eq(userPreferencesSchema.clerkUserId, userId));
 
-  return rows[0]?.themeMode ?? 'system';
+  return rows[0]?.themeMode ?? 'light';
 };

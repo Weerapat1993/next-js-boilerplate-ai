@@ -46,12 +46,6 @@ export function generateStaticParams() {
   return routing.locales.map((locale) => ({ locale }));
 }
 
-const SYSTEM_THEME_SCRIPT = `
-if (window.matchMedia('(prefers-color-scheme: dark)').matches) {
-  document.documentElement.classList.add('dark');
-}
-`;
-
 export default async function RootLayout(props: {
   children: React.ReactNode;
   params: Promise<{ locale: string }>;
@@ -73,11 +67,6 @@ export default async function RootLayout(props: {
       className={`${htmlClassName} ${instrumentSans.variable}`}
       suppressHydrationWarning
     >
-      <head>
-        {themeMode === 'system' && (
-          <script dangerouslySetInnerHTML={{ __html: SYSTEM_THEME_SCRIPT }} />
-        )}
-      </head>
       <body>
         <NextIntlClientProvider>{props.children}</NextIntlClientProvider>
       </body>

@@ -9,7 +9,7 @@ export const UserProfileWithAppearance = (props: {
   appearanceContent: React.ReactNode;
 }) => {
   return (
-    <UserProfile path={props.path}>
+    <UserProfile appearance={{ variables: { colorForeground: 'black' } }} path={props.path}>
       <UserProfile.Page
         label={props.appearanceLabel}
         labelIcon={<Palette className="size-4" />}
