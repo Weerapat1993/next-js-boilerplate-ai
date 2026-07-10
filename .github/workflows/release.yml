@@ -3,16 +3,10 @@ name: Release
 on:
   workflow_dispatch:
     inputs:
-      release-type:
-        description: Version bump type (leave empty for auto-detect from commits)
+      release-version:
+        description: Exact version (e.g. 1.4.0) or bump type (patch/minor/major). Leave empty for auto-detect from commits.
         required: false
-        type: choice
-        default: default
-        options:
-          - default
-          - patch
-          - minor
-          - major
+        type: string
 
 jobs:
   release:
@@ -37,7 +31,7 @@ jobs:
           git config user.email "github-actions[bot]@users.noreply.github.com"
 
       - name: Bump version and generate changelog
-        run: bunx standard-version ${{ inputs.release-type != 'default' && format('--release-as {0}', inputs.release-type) || '' }}
+        run: bunx standard-version ${{ inputs.release-version != '' && format('--release-as {0}', inputs.release-version) || '' }}
 
       - name: Push release commit and tag
         run: git push --follow-tags origin main
