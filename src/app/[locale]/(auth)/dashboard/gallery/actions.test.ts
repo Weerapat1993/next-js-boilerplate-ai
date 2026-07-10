@@ -129,7 +129,6 @@ describe('updateGallery', () => {
     authMock.mockResolvedValueOnce({ userId: 'user_1' });
     uploadGalleryImageMock.mockResolvedValueOnce();
     getPublicUrlMock.mockReturnValueOnce('https://cdn/galleries/new.jpg');
-    deleteGalleryImageMock.mockResolvedValueOnce();
     const updateWhereMock = vi.fn<(cond: unknown) => Promise<void>>().mockRejectedValueOnce(new Error('db down'));
     setMock.mockReturnValueOnce({ where: updateWhereMock });
     updateMock.mockReturnValueOnce({ set: setMock });
@@ -145,6 +144,7 @@ describe('updateGallery', () => {
     expect(result.status).toBe('error');
     expect(uploadGalleryImageMock).toHaveBeenCalled();
     expect(updateWhereMock).toHaveBeenCalled();
+    expect(deleteGalleryImageMock).not.toHaveBeenCalled();
     expect(revalidatePathMock).not.toHaveBeenCalled();
   });
 });

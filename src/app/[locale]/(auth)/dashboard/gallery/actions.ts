@@ -118,6 +118,7 @@ export const updateGallery = async (
   }
 
   let { imagePath, imageUrl } = existing;
+  const previousImagePath = existing.imagePath;
 
   const image = formData.get('image');
   if (image instanceof File && image.size > 0) {
@@ -130,7 +131,6 @@ export const updateGallery = async (
     try {
       await uploadGalleryImage(image, imagePath);
       imageUrl = getPublicUrl(imagePath);
-      await deleteGalleryImage(existing.imagePath);
     } catch (error) {
       const errorMessage = error instanceof Error ? error.message : 'Failed to update gallery';
       return { status: 'error', errorMessage };
@@ -145,6 +145,10 @@ export const updateGallery = async (
   } catch (error) {
     const errorMessage = error instanceof Error ? error.message : 'Failed to update gallery';
     return { status: 'error', errorMessage };
+  }
+
+  if (imagePath !== previousImagePath) {
+    await deleteGalleryImage(previousImagePath);
   }
 
   revalidatePath(GALLERY_PATH);
