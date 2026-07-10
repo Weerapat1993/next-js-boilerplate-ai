@@ -64,7 +64,8 @@
     "about": "About",
     "counter": "Counter",
     "portfolio": "Portfolio",
-    "dashboard": "Dashboard"
+    "dashboard": "Dashboard",
+    "gallery": "Gallery"
   },
   "NavUser": {
     "settings": "Settings",
@@ -91,5 +92,22 @@
     "save_error": "Couldn't save your preference. Try again.",
     "language_title": "Language",
     "language_description": "Choose the language used across the app."
+  },
+  "GalleryPage": {
+    "meta_title": "Gallery",
+    "meta_description": "Upload and manage your gallery images.",
+    "empty_state": "No gallery images yet.",
+    "title_label": "Title",
+    "image_label": "Image",
+    "create_button": "Add image",
+    "edit_button": "Edit",
+    "save_button": "Save",
+    "delete_button": "Delete",
+    "delete_confirm_title": "Delete gallery image",
+    "delete_confirm_description": "This image will be removed permanently. This can't be undone.",
+    "cancel_button": "Cancel",
+    "save_success": "Gallery updated",
+    "save_error": "Couldn't save the gallery image. Try again.",
+    "delete_error": "Couldn't delete the gallery image. Try again."
   }
 }

@@ -35,3 +35,16 @@ export const userPreferencesSchema = pgTable('user_preferences', {
     .$onUpdate(() => new Date())
     .notNull(),
 });
+
+export const gallerySchema = pgTable('gallery', {
+  id: uuid('id').primaryKey().defaultRandom(),
+  clerkUserId: text('clerk_user_id').notNull(),
+  title: text('title').notNull(),
+  imagePath: text('image_path').notNull(),
+  imageUrl: text('image_url').notNull(),
+  createdAt: timestamp('created_at', { mode: 'date' }).defaultNow().notNull(),
+  updatedAt: timestamp('updated_at', { mode: 'date' })
+    .defaultNow()
+    .$onUpdate(() => new Date())
+    .notNull(),
+});

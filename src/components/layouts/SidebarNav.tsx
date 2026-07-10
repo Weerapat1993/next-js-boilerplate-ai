@@ -1,6 +1,6 @@
 'use client';
 
-import { Boxes, Briefcase, Hash, Home, Info, LayoutDashboard } from 'lucide-react';
+import { Boxes, Briefcase, Hash, Home, Image, Info, LayoutDashboard } from 'lucide-react';
 import { useTranslations } from 'next-intl';
 import { usePathname } from 'next/navigation';
 import { Link } from '@/libs/I18nNavigation';
@@ -41,6 +41,7 @@ export const SidebarNav = (props: { footerSlot?: React.ReactNode }) => {
     { href: '/counter/', label: t('counter'), icon: Hash },
     { href: '/portfolio/', label: t('portfolio'), icon: Briefcase },
     { href: '/dashboard/', label: t('dashboard'), icon: LayoutDashboard },
+    { href: '/gallery/', label: t('gallery'), icon: Image },
   ];
 
   return (
@@ -52,7 +53,9 @@ export const SidebarNav = (props: { footerSlot?: React.ReactNode }) => {
               <div className="flex aspect-square size-8 items-center justify-center rounded-lg bg-sidebar-primary text-sidebar-primary-foreground">
                 <Boxes className="size-4" />
               </div>
-              <span className="truncate font-semibold group-data-[collapsible=icon]:hidden">{AppConfig.name}</span>
+              <span className="truncate font-semibold group-data-[collapsible=icon]:hidden">
+                {AppConfig.name}
+              </span>
             </SidebarMenuButton>
           </SidebarMenuItem>
         </SidebarMenu>
