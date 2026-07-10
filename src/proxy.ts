@@ -10,6 +10,8 @@ const isProtectedRoute = createRouteMatcher([
   '/:locale/dashboard(.*)',
   '/settings(.*)',
   '/:locale/settings(.*)',
+  '/gallery(.*)',
+  '/:locale/gallery(.*)',
 ]);
 
 const isAuthPage = createRouteMatcher([
@@ -26,7 +28,7 @@ export default async function proxy(request: NextRequest, event: NextFetchEvent)
     // oxlint-disable-next-line typescript/return-await
     return clerkMiddleware(async (auth, req) => {
       if (isProtectedRoute(req)) {
-        const locale = req.nextUrl.pathname.match(/(\/.*)\/(?:dashboard|settings)/u)?.at(1) ?? '';
+        const locale = req.nextUrl.pathname.match(/(\/.*)\/(?:dashboard|settings|gallery)/u)?.at(1) ?? '';
 
         const signInUrl = new URL(`${locale}/sign-in`, req.url);
 
