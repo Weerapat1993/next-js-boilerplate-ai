@@ -64,7 +64,8 @@
     "about": "เกี่ยวกับ",
     "counter": "นับจำนวน",
     "portfolio": "ผลงาน",
-    "dashboard": "แดชบอร์ด"
+    "dashboard": "แดชบอร์ด",
+    "gallery": "แกลเลอรี"
   },
   "NavUser": {
     "settings": "การตั้งค่า",
@@ -91,5 +92,20 @@
     "save_error": "บันทึกไม่สำเร็จ ลองใหม่อีกครั้ง",
     "language_title": "ภาษา",
     "language_description": "เลือกภาษาที่ใช้ในแอป"
+  },
+  "GalleryPage": {
+    "meta_title": "แกลเลอรี",
+    "meta_description": "อัปโหลดและจัดการรูปภาพในแกลเลอรีของคุณ",
+    "empty_state": "ยังไม่มีรูปภาพในแกลเลอรี",
+    "title_label": "ชื่อ",
+    "image_label": "รูปภาพ",
+    "create_button": "เพิ่มรูปภาพ",
+    "edit_button": "แก้ไข",
+    "save_button": "บันทึก",
+    "delete_button": "ลบ",
+    "cancel_button": "ยกเลิก",
+    "save_success": "อัปเดตแกลเลอรีแล้ว",
+    "save_error": "บันทึกรูปภาพแกลเลอรีไม่สำเร็จ ลองใหม่อีกครั้ง",
+    "delete_error": "ลบรูปภาพแกลเลอรีไม่สำเร็จ ลองใหม่อีกครั้ง"
   }
 }
