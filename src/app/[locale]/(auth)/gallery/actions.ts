@@ -4,6 +4,7 @@ import { auth } from '@clerk/nextjs/server';
 import { eq } from 'drizzle-orm';
 import { revalidatePath } from 'next/cache';
 import { db } from '@/libs/DB';
+import { logger } from '@/libs/Logger';
 import { deleteGalleryImage, getPublicUrl, uploadGalleryImage } from '@/libs/SupabaseStorage';
 import { gallerySchema } from '@/models/Schema';
 import { GalleryValidation } from '@/validations/GalleryValidation';
@@ -65,12 +66,17 @@ export const createGallery = async (
     await uploadGalleryImage(parsed.data.image, imagePath);
     const imageUrl = getPublicUrl(imagePath);
 
-    await db.insert(gallerySchema).values({
-      clerkUserId: userId,
-      title: parsed.data.title,
-      imagePath,
-      imageUrl,
-    });
+    try {
+      await db.insert(gallerySchema).values({
+        clerkUserId: userId,
+        title: parsed.data.title,
+        imagePath,
+        imageUrl,
+      });
+    } catch (error) {
+      await deleteGalleryImage(imagePath);
+      throw error;
+    }
   } catch (error) {
     const errorMessage = error instanceof Error ? error.message : 'Failed to create gallery';
     return { status: 'error', errorMessage };
@@ -174,13 +180,16 @@ export const deleteGallery = async (id: string): Promise<GalleryActionState> => 
     return { status: 'error', errorMessage: 'Gallery not found' };
   }
 
+  await db.delete(gallerySchema).where(eq(gallerySchema.id, id));
+
   try {
     await deleteGalleryImage(existing.imagePath);
-  } catch {
-    return { status: 'error', errorMessage: 'Failed to delete image' };
+  } catch (error) {
+    logger.error('Failed to delete gallery image after row deletion', {
+      imagePath: existing.imagePath,
+      error,
+    });
   }
-
-  await db.delete(gallerySchema).where(eq(gallerySchema.id, id));
 
   revalidatePath(GALLERY_PATH);
 

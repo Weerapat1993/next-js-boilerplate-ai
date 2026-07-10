@@ -112,6 +112,7 @@ describe('createGallery', () => {
     uploadGalleryImageMock.mockResolvedValueOnce();
     getPublicUrlMock.mockReturnValueOnce('https://cdn/galleries/abc.jpg');
     valuesMock.mockRejectedValueOnce(new Error('db down'));
+    deleteGalleryImageMock.mockResolvedValueOnce();
     const { createGallery } = await import('./actions');
     const formData = new FormData();
     formData.set('title', 'Beach day');
@@ -121,6 +122,7 @@ describe('createGallery', () => {
 
     expect(result.status).toBe('error');
     expect(revalidatePathMock).not.toHaveBeenCalled();
+    expect(deleteGalleryImageMock).toHaveBeenCalled();
   });
 });
 
@@ -150,7 +152,7 @@ describe('updateGallery', () => {
 });
 
 describe('deleteGallery', () => {
-  it('deletes the storage object before the DB row', async () => {
+  it('deletes the DB row before the storage object', async () => {
     authMock.mockResolvedValueOnce({ userId: 'user_1' });
     deleteGalleryImageMock.mockResolvedValueOnce();
     const { deleteGallery } = await import('./actions');
@@ -158,18 +160,18 @@ describe('deleteGallery', () => {
     const result = await deleteGallery('gallery_1');
 
     expect(result.status).toBe('success');
-    expect(deleteGalleryImageMock).toHaveBeenCalledWith('galleries/old.jpg');
     expect(deleteMock).toHaveBeenCalled();
+    expect(deleteGalleryImageMock).toHaveBeenCalledWith('galleries/old.jpg');
   });
 
-  it('aborts and does not delete the DB row when storage delete fails', async () => {
+  it('still reports success and deletes the DB row when storage delete fails', async () => {
     authMock.mockResolvedValueOnce({ userId: 'user_1' });
     deleteGalleryImageMock.mockRejectedValueOnce(new Error('storage down'));
     const { deleteGallery } = await import('./actions');
 
     const result = await deleteGallery('gallery_1');
 
-    expect(result.status).toBe('error');
-    expect(deleteMock).not.toHaveBeenCalled();
+    expect(result.status).toBe('success');
+    expect(deleteMock).toHaveBeenCalled();
   });
 });
