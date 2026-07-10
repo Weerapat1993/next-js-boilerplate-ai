@@ -103,6 +103,8 @@
     "edit_button": "แก้ไข",
     "save_button": "บันทึก",
     "delete_button": "ลบ",
+    "delete_confirm_title": "ลบรูปภาพแกลเลอรี",
+    "delete_confirm_description": "รูปภาพนี้จะถูกลบถาวร ไม่สามารถย้อนกลับได้",
     "cancel_button": "ยกเลิก",
     "save_success": "อัปเดตแกลเลอรีแล้ว",
     "save_error": "บันทึกรูปภาพแกลเลอรีไม่สำเร็จ ลองใหม่อีกครั้ง",

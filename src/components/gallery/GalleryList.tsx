@@ -4,6 +4,17 @@ import { useTranslations } from 'next-intl';
 import { useActionState, useEffect, useState } from 'react';
 import type { GalleryActionState } from '@/app/[locale]/(auth)/gallery/actions';
 import { deleteGallery, updateGallery } from '@/app/[locale]/(auth)/gallery/actions';
+import {
+  AlertDialog,
+  AlertDialogAction,
+  AlertDialogCancel,
+  AlertDialogContent,
+  AlertDialogDescription,
+  AlertDialogFooter,
+  AlertDialogHeader,
+  AlertDialogTitle,
+  AlertDialogTrigger,
+} from '@/components/ui/alert-dialog';
 import { Button } from '@/components/ui/button';
 import { Card } from '@/components/ui/card';
 import { Input } from '@/components/ui/input';
@@ -24,12 +35,26 @@ const DeleteButton = (props: { id: string }) => {
   );
 
   return (
-    <form action={formAction}>
-      <Button type="submit" variant="destructive" size="sm" disabled={isPending}>
+    <AlertDialog>
+      <AlertDialogTrigger render={<Button type="button" variant="destructive" size="sm" disabled={isPending} />}>
         {t('delete_button')}
-      </Button>
+      </AlertDialogTrigger>
+      <AlertDialogContent>
+        <AlertDialogHeader>
+          <AlertDialogTitle>{t('delete_confirm_title')}</AlertDialogTitle>
+          <AlertDialogDescription>{t('delete_confirm_description')}</AlertDialogDescription>
+        </AlertDialogHeader>
+        <AlertDialogFooter>
+          <AlertDialogCancel>{t('cancel_button')}</AlertDialogCancel>
+          <form action={formAction}>
+            <AlertDialogAction type="submit" variant="destructive" disabled={isPending}>
+              {t('delete_button')}
+            </AlertDialogAction>
+          </form>
+        </AlertDialogFooter>
+      </AlertDialogContent>
       {state.status === 'error' && <p className="text-sm text-destructive">{t('delete_error')}</p>}
-    </form>
+    </AlertDialog>
   );
 };
 

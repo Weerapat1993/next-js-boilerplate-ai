@@ -103,6 +103,8 @@
     "edit_button": "Edit",
     "save_button": "Save",
     "delete_button": "Delete",
+    "delete_confirm_title": "Delete gallery image",
+    "delete_confirm_description": "This image will be removed permanently. This can't be undone.",
     "cancel_button": "Cancel",
     "save_success": "Gallery updated",
     "save_error": "Couldn't save the gallery image. Try again.",
