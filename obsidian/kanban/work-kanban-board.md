@@ -12,11 +12,10 @@ kanban-plugin: board
 
 ## INPROGRESS
 
-- [NEX-1003](tasks/NEX-1003.md): Galleries table with Supabase S3 image upload and CRUD
-
 ## REVIEW
 
 - [NEX-1001](tasks/NEX-1001.md): Redesign Landing Page UI (Apple Developer Docs Style)
+- [NEX-1003](tasks/NEX-1003.md): Galleries table with Supabase S3 image upload and CRUD
 
 ## DONE
 
