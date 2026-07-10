@@ -1,31 +1,37 @@
 import type { Metadata } from 'next';
-import { getTranslations } from 'next-intl/server';
+import { getTranslations, setRequestLocale } from 'next-intl/server';
 import { CounterForm } from '@/components/CounterForm';
 import { CurrentCount } from '@/components/CurrentCount';
 
-export async function generateMetadata(props: {
+type CounterPageProps = {
   params: Promise<{ locale: string }>;
-}): Promise<Metadata> {
-  const { locale } = await props.params;
-  const t = await getTranslations({
-    locale,
-    namespace: 'Counter',
-  });
+};
 
+export async function generateMetadata(props: CounterPageProps): Promise<Metadata> {
+  const { locale } = await props.params;
+  const t = await getTranslations({ locale, namespace: 'Counter' });
   return {
     title: t('meta_title'),
     description: t('meta_description'),
   };
 }
 
-export default function Counter() {
-  return (
-    <>
-      <CounterForm />
+export default async function CounterPage(props: CounterPageProps) {
+  const { locale } = await props.params;
+  setRequestLocale(locale);
+  const t = await getTranslations({ locale, namespace: 'Counter' });
 
-      <div className="mt-3">
+  return (
+    <div>
+      <h1 className="mb-6 text-3xl font-bold tracking-tight text-gray-900 dark:text-gray-100">
+        {t('meta_title')}
+      </h1>
+      <div className="rounded-lg border border-gray-200 p-6 dark:border-gray-700">
         <CurrentCount />
+        <div className="mt-6">
+          <CounterForm />
+        </div>
       </div>
-    </>
+    </div>
   );
 }

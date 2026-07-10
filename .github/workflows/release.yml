@@ -1,42 +1,44 @@
 name: Release
 
 on:
-  workflow_run:
-    workflows: [CI]
-    types:
-      - completed
-    branches:
-      - main
+  workflow_dispatch:
+    inputs:
+      release-version:
+        description: Exact version (e.g. 1.4.0) or bump type (patch/minor/major). Leave empty for auto-detect from commits.
+        required: false
+        type: string
 
 jobs:
   release:
-    strategy:
-      matrix:
-        node-version: [24.x]
-
     name: Create a new release
     runs-on: ubuntu-latest
     timeout-minutes: 10
 
     permissions:
-      contents: write # to be able to publish a GitHub release
-      issues: write # to be able to comment on released issues
-      pull-requests: write # to be able to comment on released pull requests
+      contents: write # to be able to push the release commit/tag and publish a GitHub release
 
     steps:
       - uses: actions/checkout@v7
         with:
           fetch-depth: 0
 
-      - name: Set up Node.js environment
+      - name: Set up Bun environment
         uses: ./.github/actions/setup-project
-        with:
-          node-version: ${{ matrix.node-version }}
 
-      - name: Verify the integrity of provenance attestations and registry signatures for installed dependencies
-        run: npm audit signatures
+      - name: Configure git identity
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
 
-      - name: Release
-        run: npx semantic-release
+      - name: Bump version and generate changelog
+        run: bunx standard-version ${{ inputs.release-version != '' && format('--release-as {0}', inputs.release-version) || '' }}
+
+      - name: Push release commit and tag
+        run: git push --follow-tags origin main
+
+      - name: Create GitHub release
         env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          tag=$(git describe --tags --abbrev=0)
+          gh release create "$tag" --title "$tag" --generate-notes

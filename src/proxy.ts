@@ -5,7 +5,14 @@ import { routing } from './libs/I18nRouting';
 
 const handleI18nRouting = createMiddleware(routing);
 
-const isProtectedRoute = createRouteMatcher(['/dashboard(.*)', '/:locale/dashboard(.*)']);
+const isProtectedRoute = createRouteMatcher([
+  '/dashboard(.*)',
+  '/:locale/dashboard(.*)',
+  '/settings(.*)',
+  '/:locale/settings(.*)',
+  '/gallery(.*)',
+  '/:locale/gallery(.*)',
+]);
 
 const isAuthPage = createRouteMatcher([
   '/sign-in(.*)',
@@ -21,7 +28,7 @@ export default async function proxy(request: NextRequest, event: NextFetchEvent)
     // oxlint-disable-next-line typescript/return-await
     return clerkMiddleware(async (auth, req) => {
       if (isProtectedRoute(req)) {
-        const locale = req.nextUrl.pathname.match(/(\/.*)\/dashboard/u)?.at(1) ?? '';
+        const locale = req.nextUrl.pathname.match(/(\/.*)\/(?:dashboard|settings|gallery)/u)?.at(1) ?? '';
 
         const signInUrl = new URL(`${locale}/sign-in`, req.url);
 

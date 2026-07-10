@@ -1,9 +1,22 @@
 'use client';
 
+import { Globe } from 'lucide-react';
 import { useLocale, useTranslations } from 'next-intl';
-import type { ChangeEventHandler } from 'react';
+import { Button } from '@/components/ui/button';
+import {
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuRadioGroup,
+  DropdownMenuRadioItem,
+  DropdownMenuTrigger,
+} from '@/components/ui/dropdown-menu';
 import { usePathname, useRouter } from '@/libs/I18nNavigation';
 import { routing } from '@/libs/I18nRouting';
+
+const localeLabels: Record<string, string> = {
+  en: 'English',
+  th: 'ไทย',
+};
 
 export const LocaleSwitcher = () => {
   const t = useTranslations('LocaleSwitcher');
@@ -11,9 +24,7 @@ export const LocaleSwitcher = () => {
   const pathname = usePathname();
   const locale = useLocale();
 
-  const handleChange: ChangeEventHandler<HTMLSelectElement> = (event) => {
-    const newLocale = event.target.value;
-
+  const handleChange = (newLocale: string) => {
     if (newLocale === locale) {
       return;
     }
@@ -23,17 +34,22 @@ export const LocaleSwitcher = () => {
   };
 
   return (
-    <select
-      defaultValue={locale}
-      onChange={handleChange}
-      className="border border-gray-300 font-medium focus:outline-hidden focus-visible:ring-3"
-      aria-label={t('change_language')}
-    >
-      {routing.locales.map((elt) => (
-        <option key={elt} value={elt}>
-          {elt.toUpperCase()}
-        </option>
-      ))}
-    </select>
+    <DropdownMenu>
+      <DropdownMenuTrigger
+        render={<Button variant="outline" size="sm" aria-label={t('change_language')} />}
+      >
+        <Globe />
+        {localeLabels[locale] ?? locale.toUpperCase()}
+      </DropdownMenuTrigger>
+      <DropdownMenuContent align="end" className="min-w-40">
+        <DropdownMenuRadioGroup value={locale} onValueChange={handleChange}>
+          {routing.locales.map((elt) => (
+            <DropdownMenuRadioItem key={elt} value={elt}>
+              {localeLabels[elt] ?? elt.toUpperCase()}
+            </DropdownMenuRadioItem>
+          ))}
+        </DropdownMenuRadioGroup>
+      </DropdownMenuContent>
+    </DropdownMenu>
   );
 };
