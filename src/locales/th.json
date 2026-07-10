@@ -68,6 +68,7 @@
     "gallery": "แกลเลอรี"
   },
   "NavUser": {
+    "login": "เข้าสู่ระบบ",
     "settings": "การตั้งค่า",
     "sign_out": "ออกจากระบบ"
   },
@@ -97,6 +98,7 @@
     "meta_title": "แกลเลอรี",
     "meta_description": "อัปโหลดและจัดการรูปภาพในแกลเลอรีของคุณ",
     "empty_state": "ยังไม่มีรูปภาพในแกลเลอรี",
+    "add_button": "เพิ่มรูปภาพ",
     "title_label": "ชื่อ",
     "image_label": "รูปภาพ",
     "create_button": "เพิ่มรูปภาพ",

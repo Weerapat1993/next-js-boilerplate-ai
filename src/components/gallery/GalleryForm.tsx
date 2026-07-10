@@ -1,7 +1,7 @@
 'use client';
 
 import { useTranslations } from 'next-intl';
-import { useActionState } from 'react';
+import { useActionState, useEffect } from 'react';
 import type { GalleryActionState } from '@/app/[locale]/(auth)/gallery/actions';
 import { createGallery } from '@/app/[locale]/(auth)/gallery/actions';
 import { Button } from '@/components/ui/button';
@@ -9,9 +9,15 @@ import { Input } from '@/components/ui/input';
 
 const initialState: GalleryActionState = { status: 'idle' };
 
-export const GalleryForm = () => {
+export const GalleryForm = (props: { onSuccess?: () => void }) => {
   const t = useTranslations('GalleryPage');
   const [state, formAction, isPending] = useActionState(createGallery, initialState);
+
+  useEffect(() => {
+    if (state.status === 'success') {
+      props.onSuccess?.();
+    }
+  }, [state.status]);
 
   return (
     <form action={formAction} className="space-y-3">

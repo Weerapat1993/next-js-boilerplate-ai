@@ -1,7 +1,7 @@
 'use client';
 
 import { useUser } from '@clerk/nextjs';
-import { ChevronsUpDown, LogOut, Settings } from 'lucide-react';
+import { ChevronsUpDown, LogIn, LogOut, Settings } from 'lucide-react';
 import { useTranslations } from 'next-intl';
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
 import {
@@ -27,12 +27,25 @@ const getInitials = (name: string) =>
     .toUpperCase();
 
 export const NavUser = () => {
-  const { user } = useUser();
+  const { isLoaded, user } = useUser();
   const { isMobile } = useSidebar();
   const t = useTranslations('NavUser');
 
-  if (!user) {
+  if (!isLoaded) {
     return null;
+  }
+
+  if (!user) {
+    return (
+      <SidebarMenu>
+        <SidebarMenuItem>
+          <SidebarMenuButton size="lg" render={<Link href="/sign-in/" />}>
+            <LogIn className="size-4" />
+            {t('login')}
+          </SidebarMenuButton>
+        </SidebarMenuItem>
+      </SidebarMenu>
+    );
   }
 
   const displayName = user.fullName ?? user.primaryEmailAddress?.emailAddress ?? '';
