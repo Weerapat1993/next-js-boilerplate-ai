@@ -31,7 +31,7 @@ export const listGalleries = async (clerkUserId: string) => {
     .from(gallerySchema)
     .where(eq(gallerySchema.clerkUserId, clerkUserId));
 
-  return rows.map(row => ({ id: row.id, title: row.title, imageUrl: row.imageUrl }));
+  return rows.map((row) => ({ id: row.id, title: row.title, imageUrl: row.imageUrl }));
 };
 
 /**
@@ -111,17 +111,13 @@ export const updateGallery = async (
     return { status: 'error', errorMessage: 'Invalid gallery data' };
   }
 
-  const [existing] = await db
-    .select()
-    .from(gallerySchema)
-    .where(eq(gallerySchema.id, id));
+  const [existing] = await db.select().from(gallerySchema).where(eq(gallerySchema.id, id));
 
   if (!existing || existing.clerkUserId !== userId) {
     return { status: 'error', errorMessage: 'Gallery not found' };
   }
 
-  let imagePath = existing.imagePath;
-  let imageUrl = existing.imageUrl;
+  let { imagePath, imageUrl } = existing;
 
   const image = formData.get('image');
   if (image instanceof File && image.size > 0) {
@@ -168,10 +164,7 @@ export const deleteGallery = async (id: string): Promise<GalleryActionState> => 
     return { status: 'error', errorMessage: 'Not signed in' };
   }
 
-  const [existing] = await db
-    .select()
-    .from(gallerySchema)
-    .where(eq(gallerySchema.id, id));
+  const [existing] = await db.select().from(gallerySchema).where(eq(gallerySchema.id, id));
 
   if (!existing || existing.clerkUserId !== userId) {
     return { status: 'error', errorMessage: 'Gallery not found' };
