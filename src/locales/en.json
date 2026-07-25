@@ -110,6 +110,8 @@
     "cancel_button": "Cancel",
     "save_success": "Gallery updated",
     "save_error": "Couldn't save the gallery image. Try again.",
-    "delete_error": "Couldn't delete the gallery image. Try again."
+    "delete_error": "Couldn't delete the gallery image. Try again.",
+    "copy_link_button": "Copy image link",
+    "copy_link_copied": "Link copied"
   }
 }

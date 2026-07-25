@@ -1,5 +1,6 @@
 'use client';
 
+import { Check, Copy } from 'lucide-react';
 import { useTranslations } from 'next-intl';
 import { useActionState, useEffect, useState } from 'react';
 import type { GalleryActionState } from '@/app/[locale]/(auth)/gallery/actions';
@@ -117,6 +118,30 @@ const EditForm = (props: { item: GalleryItem; onCancel: () => void; onSaved: () 
   );
 };
 
+const CopyLinkButton = (props: { url: string }) => {
+  const t = useTranslations('GalleryPage');
+  const [isCopied, setIsCopied] = useState(false);
+
+  const handleCopy = async () => {
+    await navigator.clipboard.writeText(props.url);
+    setIsCopied(true);
+    setTimeout(() => setIsCopied(false), 2000);
+  };
+
+  return (
+    <Button
+      type="button"
+      variant="secondary"
+      size="icon"
+      className="absolute top-2 right-2 size-8"
+      aria-label={isCopied ? t('copy_link_copied') : t('copy_link_button')}
+      onClick={handleCopy}
+    >
+      {isCopied ? <Check className="size-4" /> : <Copy className="size-4" />}
+    </Button>
+  );
+};
+
 const GalleryCard = (props: { item: GalleryItem }) => {
   const t = useTranslations('GalleryPage');
   const [isEditing, setIsEditing] = useState(false);
@@ -135,12 +160,15 @@ const GalleryCard = (props: { item: GalleryItem }) => {
 
   return (
     <Card className="space-y-2 p-4">
-      {/* eslint-disable-next-line @next/next/no-img-element -- external Supabase-hosted URL */}
-      <img
-        src={props.item.imageUrl}
-        alt={props.item.title}
-        className="aspect-square w-full rounded-md object-cover"
-      />
+      <div className="relative">
+        {/* eslint-disable-next-line @next/next/no-img-element -- external Supabase-hosted URL */}
+        <img
+          src={props.item.imageUrl}
+          alt={props.item.title}
+          className="aspect-square w-full rounded-md object-cover"
+        />
+        <CopyLinkButton url={props.item.imageUrl} />
+      </div>
       <p className="text-sm font-medium">{props.item.title}</p>
       <div className="flex gap-2">
         <Button type="button" variant="outline" size="sm" onClick={() => setIsEditing(true)}>
